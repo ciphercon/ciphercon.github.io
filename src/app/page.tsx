@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import RevealSection from "@/components/RevealSection";
+import RiveDemo from "@/components/RiveDemo";
 
 const PROJECTS = [
   { title: "Project One", tag: "Web App" },
@@ -44,6 +45,17 @@ export default function Home() {
             </RevealSection>
           ))}
         </div>
+      </section>
+
+      <section className="px-6 pb-32 sm:px-10">
+        <RevealSection>
+          <h2 className="mb-10 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
+            Interactive (Rive demo — swap for your own .riv asset)
+          </h2>
+        </RevealSection>
+        <RevealSection>
+          <RiveDemo />
+        </RevealSection>
       </section>
 
       <RevealSection
