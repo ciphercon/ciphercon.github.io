@@ -16,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name — Portfolio",
-  description: "Portfolio site",
+  title: "Abhishek Singh — Security Researcher",
+  description:
+    "Security Researcher at Microsoft specializing in threat hunting, detection engineering, and cloud security.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

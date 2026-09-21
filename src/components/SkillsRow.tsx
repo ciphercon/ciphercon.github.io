@@ -1,4 +1,15 @@
-const TOOLS = ["Figma", "Claude", "Photoshop", "Illustrator"];
+const TOOLS = [
+  "Threat Hunting",
+  "Detection Engineering",
+  "Penetration Testing",
+  "Cloud Security",
+  "Azure Sentinel",
+  "Splunk",
+  "Carbon Black",
+  "MITRE ATT&CK",
+  "Python",
+  "KQL",
+];
 
 export default function SkillsRow() {
   return (

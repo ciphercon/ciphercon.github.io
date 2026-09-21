@@ -11,7 +11,7 @@ export default function Hero() {
         transition={{ duration: 0.5 }}
         className="font-mono text-xs uppercase tracking-widest text-muted"
       >
-        10.8231° N, 106.6297° E — Ho Chi Minh City
+        28.5355° N, 77.3910° E — Noida, India
       </motion.p>
 
       <motion.h1
@@ -20,9 +20,9 @@ export default function Hero() {
         transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
         className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl"
       >
-        I&apos;m a regular person passionate about{" "}
-        <span className="text-accent">Art</span> and{" "}
-        <span className="font-mono text-muted">&lt;technology/&gt;</span>
+        I&apos;m Abhishek, a{" "}
+        <span className="text-accent">Security Researcher</span> passionate
+        about <span className="font-mono text-muted">&lt;threat-hunting/&gt;</span>
       </motion.h1>
 
       <motion.p
@@ -31,8 +31,9 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-6 max-w-md text-base text-foreground/70"
       >
-        Placeholder subline — a sentence about your role and focus. Replace
-        with your own intro copy.
+        Security Researcher at Microsoft · Mentoring at Topmate · Public
+        Speaker. 6.8+ years across threat hunting, detection engineering,
+        cloud security, and incident response.
       </motion.p>
 
       <motion.div

@@ -3,6 +3,7 @@ import RevealSection from "@/components/RevealSection";
 import SkillsRow from "@/components/SkillsRow";
 import ProjectGrid from "@/components/ProjectGrid";
 import ExperienceAccordion from "@/components/ExperienceAccordion";
+import Education from "@/components/Education";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
         className="mx-auto max-w-3xl px-6 py-24 sm:px-10"
       >
         <h2 className="mb-8 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-          Tools
+          Skills
         </h2>
         <SkillsRow />
       </RevealSection>
@@ -22,7 +23,7 @@ export default function Home() {
       <section id="work" className="px-6 py-24 sm:px-10">
         <RevealSection>
           <h2 className="mb-10 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-            Snap-shots
+            Highlights
           </h2>
         </RevealSection>
         <RevealSection>
@@ -41,19 +42,27 @@ export default function Home() {
         </RevealSection>
       </section>
 
+      <section className="px-6 py-24 sm:px-10">
+        <RevealSection>
+          <Education />
+        </RevealSection>
+      </section>
+
       <RevealSection
         id="contact"
         className="border-t border-white/10 px-6 py-32 text-center sm:px-10"
       >
         <h2 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-          Shoot a message.
+          Let&apos;s talk security.
         </h2>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="mailto:hello@example.com"
+            href="https://topmate.io/abhishekrajawat"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-lg font-medium text-accent underline underline-offset-4"
           >
-            hello@example.com
+            Book a 1:1
           </a>
           <span className="hidden text-muted sm:inline">·</span>
           <a

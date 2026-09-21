@@ -3,12 +3,30 @@
 import { motion } from "framer-motion";
 
 const PROJECTS = [
-  { title: "Project One", tag: "Case Study", href: "#" },
-  { title: "Project Two", tag: "Web Design", href: "#" },
-  { title: "Project Three", tag: "App Design", href: "#" },
-  { title: "Project Four", tag: "Case Study", href: "#" },
-  { title: "Project Five", tag: "Web Design", href: "#" },
-  { title: "Project Six", tag: "App Design", href: "#" },
+  {
+    title: "SecurText",
+    tag: "LLM Tool",
+    description: "ChatGPT-based incident investigation summarizer.",
+    href: "#",
+  },
+  {
+    title: "5-Day Threat Hunting Program",
+    tag: "Program",
+    description: "Structured framework for proactive threat detection using Elastic.",
+    href: "#",
+  },
+  {
+    title: "IOC Categorization Automation",
+    tag: "Automation",
+    description: "Python workflow automating IOC submission for SOC teams.",
+    href: "#",
+  },
+  {
+    title: "Mentoring at Topmate",
+    tag: "Mentoring",
+    description: "1:1 sessions on cybersecurity careers and interview prep.",
+    href: "https://topmate.io/abhishekrajawat",
+  },
 ];
 
 export default function ProjectGrid() {
@@ -34,6 +52,9 @@ export default function ProjectGrid() {
               {project.tag}
             </span>
             <h3 className="mt-1 text-xl font-semibold">{project.title}</h3>
+            <p className="mt-2 text-sm text-foreground/60">
+              {project.description}
+            </p>
           </motion.div>
 
           <motion.span
