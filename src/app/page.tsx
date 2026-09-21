@@ -1,60 +1,43 @@
 import Hero from "@/components/Hero";
 import RevealSection from "@/components/RevealSection";
-import RiveDemo from "@/components/RiveDemo";
-
-const PROJECTS = [
-  { title: "Project One", tag: "Web App" },
-  { title: "Project Two", tag: "Open Source" },
-  { title: "Project Three", tag: "Design" },
-  { title: "Project Four", tag: "API" },
-];
+import SkillsRow from "@/components/SkillsRow";
+import ProjectGrid from "@/components/ProjectGrid";
+import ExperienceAccordion from "@/components/ExperienceAccordion";
 
 export default function Home() {
   return (
     <>
       <Hero />
 
-      <RevealSection className="mx-auto max-w-3xl px-6 py-32 text-center sm:px-10">
-        <p className="text-2xl font-medium leading-relaxed text-foreground/90 sm:text-3xl">
-          Placeholder mission statement — a short line about what you build
-          and why, styled the way landonorris.com uses a single centered
-          quote between sections.
-        </p>
+      <RevealSection
+        id="about"
+        className="mx-auto max-w-3xl px-6 py-24 sm:px-10"
+      >
+        <h2 className="mb-8 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
+          Tools
+        </h2>
+        <SkillsRow />
       </RevealSection>
 
-      <section className="px-6 pb-32 sm:px-10">
+      <section id="work" className="px-6 py-24 sm:px-10">
         <RevealSection>
           <h2 className="mb-10 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-            Selected Work
+            Snap-shots
           </h2>
         </RevealSection>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {PROJECTS.map((project) => (
-            <RevealSection key={project.title}>
-              <div className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950">
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <span className="text-xs font-medium uppercase tracking-widest text-accent">
-                    {project.tag}
-                  </span>
-                  <h3 className="mt-1 text-2xl font-semibold transition-transform duration-300 group-hover:translate-x-1">
-                    {project.title}
-                  </h3>
-                </div>
-              </div>
-            </RevealSection>
-          ))}
-        </div>
+        <RevealSection>
+          <ProjectGrid />
+        </RevealSection>
       </section>
 
-      <section className="px-6 pb-32 sm:px-10">
+      <section className="px-6 py-24 sm:px-10">
         <RevealSection>
           <h2 className="mb-10 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-            Interactive (Rive demo — swap for your own .riv asset)
+            Worked At
           </h2>
         </RevealSection>
         <RevealSection>
-          <RiveDemo />
+          <ExperienceAccordion />
         </RevealSection>
       </section>
 
@@ -63,14 +46,23 @@ export default function Home() {
         className="border-t border-white/10 px-6 py-32 text-center sm:px-10"
       >
         <h2 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-          Let&apos;s build something.
+          Shoot a message.
         </h2>
-        <a
-          href="mailto:hello@example.com"
-          className="mt-6 inline-block text-lg font-medium text-accent underline underline-offset-4"
-        >
-          hello@example.com
-        </a>
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="mailto:hello@example.com"
+            className="text-lg font-medium text-accent underline underline-offset-4"
+          >
+            hello@example.com
+          </a>
+          <span className="hidden text-muted sm:inline">·</span>
+          <a
+            href="/cv.pdf"
+            className="text-lg font-medium text-foreground/80 underline underline-offset-4 transition-colors hover:text-accent"
+          >
+            Download CV
+          </a>
+        </div>
       </RevealSection>
     </>
   );

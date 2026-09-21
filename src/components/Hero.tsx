@@ -4,34 +4,44 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative flex h-svh min-h-[640px] w-full flex-col justify-end overflow-hidden bg-gradient-to-b from-zinc-900 via-black to-black px-6 pb-16 sm:px-10">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(212,255,61,0.12),_transparent_60%)]" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
+    <section className="relative flex min-h-svh w-full flex-col justify-center px-6 py-32 sm:px-10">
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        className="relative flex flex-col gap-4"
+        transition={{ duration: 0.5 }}
+        className="font-mono text-xs uppercase tracking-widest text-muted"
       >
-        <span className="text-sm font-medium uppercase tracking-[0.3em] text-accent">
-          2026 Portfolio
-        </span>
-        <h1 className="text-[13vw] font-black leading-[0.85] tracking-tighter sm:text-[9vw]">
-          Your Name
-        </h1>
-        <p className="max-w-md text-base text-foreground/70 sm:text-lg">
-          Software engineer &amp; builder — placeholder tagline. Swap this
-          copy, and the background gradient above for real photography.
-        </p>
-      </motion.div>
+        10.8231° N, 106.6297° E — Ho Chi Minh City
+      </motion.p>
+
+      <motion.h1
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+        className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl"
+      >
+        I&apos;m a regular person passionate about{" "}
+        <span className="text-accent">Art</span> and{" "}
+        <span className="font-mono text-muted">&lt;technology/&gt;</span>
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="mt-6 max-w-md text-base text-foreground/70"
+      >
+        Placeholder subline — a sentence about your role and focus. Replace
+        with your own intro copy.
+      </motion.p>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-        className="absolute bottom-8 right-6 text-xs uppercase tracking-widest text-muted sm:right-10"
+        transition={{ duration: 0.6, delay: 1 }}
+        className="absolute bottom-10 left-6 text-xs uppercase tracking-widest text-muted sm:left-10"
       >
-        Scroll
+        Scroll down
       </motion.div>
     </section>
   );
