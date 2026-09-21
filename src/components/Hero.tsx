@@ -81,9 +81,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="mb-3 inline-block rounded-sm bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background"
+          className="mb-4 inline-block rounded-sm bg-accent px-5 py-2 text-sm font-semibold uppercase tracking-widest text-background sm:text-base"
         >
-          Security Researcher
+          Security Researcher at Microsoft
         </motion.span>
 
         <motion.h1
