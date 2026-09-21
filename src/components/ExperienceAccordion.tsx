@@ -50,6 +50,14 @@ const POSITIONS = [
     period: "Sep 2018 — Jan 2019",
     description: "Early web development work, Jalandhar, Punjab.",
   },
+  {
+    id: "teachtech",
+    role: "Trainer (Part-time)",
+    company: "Teach Tech Services",
+    period: "Jul 2018 — Jul 2019",
+    description:
+      "Conducted training on penetration testing, ethical hacking (beginner to advanced), digital forensics, and running a SOC business.",
+  },
 ];
 
 export default function ExperienceAccordion() {
