@@ -2,24 +2,62 @@
 
 import { motion } from "framer-motion";
 
+const GITHUB = "https://github.com/nulldevops007";
+
 const PROJECTS = [
+  {
+    title: "5-Day Threat Hunting Exercise",
+    tag: "Threat Hunting",
+    description: "Structured daily threat hunting program for the team, built on Elastic.",
+    href: GITHUB,
+  },
+  {
+    title: "IOC Categorization Tool",
+    tag: "Automation",
+    description: "Python + Selenium automation for open-source threat intel IOC submission.",
+    href: GITHUB,
+  },
   {
     title: "SecurText",
     tag: "LLM Tool",
     description: "ChatGPT-based incident investigation summarizer.",
-    href: "#",
+    href: GITHUB,
   },
   {
-    title: "5-Day Threat Hunting Program",
-    tag: "Program",
-    description: "Structured framework for proactive threat detection using Elastic.",
-    href: "#",
+    title: "Query Solution",
+    tag: "App",
+    description: "Platform connecting students with PhD experts for live doubt-clearing sessions.",
+    href: GITHUB,
   },
   {
-    title: "IOC Categorization Automation",
-    tag: "Automation",
-    description: "Python workflow automating IOC submission for SOC teams.",
-    href: "#",
+    title: "Supply Chain Management on Blockchain",
+    tag: "Blockchain",
+    description: "Hyperledger-based system for trustworthy courier and delivery tracking.",
+    href: GITHUB,
+  },
+  {
+    title: "Swisto",
+    tag: "Web App",
+    description: "Full-stack developer & pentester for a food/grocery delivery startup.",
+    href: "https://www.swisto.in",
+  },
+  {
+    title: "User Identification System",
+    tag: "Blockchain",
+    description: "Blockchain-based user authentication with encrypted personal data blocks.",
+    href: GITHUB,
+  },
+  {
+    title: "Captcha Generator",
+    tag: "Python",
+    description: "Custom captcha generator built in Python.",
+    href: GITHUB,
+  },
+  {
+    title: "Budget Tracker",
+    tag: "C++",
+    description: "Budget management tool built in C/C++ with a custom Windows API header.",
+    href: GITHUB,
   },
   {
     title: "Mentoring at Topmate",
@@ -36,8 +74,8 @@ export default function ProjectGrid() {
         <motion.a
           key={project.title}
           href={project.href}
-          target={project.href.startsWith("http") ? "_blank" : undefined}
-          rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
           initial="rest"
           whileHover="hover"
           animate="rest"
