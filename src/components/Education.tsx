@@ -11,12 +11,31 @@ const EDUCATION = [
   },
 ];
 
+// Sorted most-recent-first, as issued on LinkedIn.
 const CERTIFICATIONS = [
-  "CompTIA Security+",
-  "CompTIA Cloud+",
-  "NetWitness Incident Responder",
-  "Certified Blockchain Developer",
-  "Python Developer (UHG)",
+  { title: "Azure 900", issuer: "Microsoft", date: "Feb 2022" },
+  { title: "Netwitness Threat Hunter II CTF", issuer: "RSA Security", date: "Oct 2021" },
+  { title: "RSA Netwitness Platform Analysis", issuer: "RSA Security", date: "Oct 2021" },
+  { title: "Python Badge for Selenium", issuer: "UnitedHealth Group", date: "Sep 2021" },
+  { title: "Splunk Fundamentals", issuer: "UnitedHealth Group", date: "Apr 2021" },
+  { title: "Cryptocurrency for Law Enforcement (Public Version)", issuer: "CISA", date: "Apr 2020" },
+  { title: "The Definitive Ethical Hacking Course", issuer: "Udemy", date: "Mar 2020" },
+  { title: "The Complete Ethical Hacking Course for 201/2017", issuer: "Udemy", date: "Mar 2020" },
+  { title: "The Complete Ethical Hacking Course: Beginner to Advanced", issuer: "Udemy", date: "Mar 2020" },
+  { title: "Cyber Security & Ethical Hacking Trainer", issuer: "Teach Tech Services", date: "Jul 2019" },
+  { title: "SAP ABAP TAW10 & TAW12", issuer: "SAP", date: "Oct 2018" },
+  { title: "Penetration Testing And Ethical Hacking", issuer: "Cybrary", date: "Oct 2018" },
+  { title: "Introduction to Cyber Attacks", issuer: "Coursera", date: "Sep 2018" },
+  { title: "Blockchain Basics and Fundamentals", issuer: "Coursera", date: "Aug 2018" },
+  { title: "Usable Security", issuer: "Coursera", date: "Aug 2018" },
+  { title: "End User Security", issuer: "Cybrary", date: "Jun 2018" },
+  { title: "Rajasthan Hackathon Certificate of Merit", issuer: "DoIT&C, Govt. of Rajasthan", date: "Mar 2018" },
+  { title: "Create a Subnet", issuer: "Cybrary", date: "Nov 2017" },
+  { title: "Understand Cloud Computing", issuer: "Cybrary", date: "Nov 2017" },
+  { title: "Computer and Network Security", issuer: "Cybrary", date: "Nov 2017" },
+  { title: "PHP For Beginner To Advance", issuer: "Udemy", date: "Jul 2017" },
+  { title: "Web Developer Bootcamp", issuer: "Udemy", date: "Jul 2017" },
+  { title: "Cloud Computing Workshop", issuer: "ISO", date: "Aug 2015" },
 ];
 
 export default function Education() {
@@ -40,12 +59,15 @@ export default function Education() {
 
       <div>
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
-          Certifications
+          Certifications ({CERTIFICATIONS.length})
         </h3>
-        <ul className="space-y-2">
+        <ul className="max-h-80 space-y-3 overflow-y-auto pr-2">
           {CERTIFICATIONS.map((cert) => (
-            <li key={cert} className="text-sm text-foreground/70">
-              {cert}
+            <li key={`${cert.title}-${cert.date}`} className="text-sm">
+              <p className="text-foreground/80">{cert.title}</p>
+              <p className="text-xs text-muted">
+                {cert.issuer} · {cert.date}
+              </p>
             </li>
           ))}
         </ul>
