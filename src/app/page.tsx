@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import RevealSection from "@/components/RevealSection";
+import StatsGrid from "@/components/StatsGrid";
 import About from "@/components/About";
 import ProjectGrid from "@/components/ProjectGrid";
 import ExperienceAccordion from "@/components/ExperienceAccordion";
@@ -9,6 +10,8 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      <StatsGrid />
 
       <RevealSection
         id="about"
