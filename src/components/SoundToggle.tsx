@@ -3,21 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import { Howl } from "howler";
 
+const UNLOCK_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
+
 /**
  * Toggles ambient background sound. Expects an audio file at
  * public/ambient.mp3 — until you add one, playback silently no-ops.
  *
- * Defaults to on and attempts to autoplay on mount. Browsers block
- * unmuted audio autoplay before any user interaction with the page —
- * no code can fully bypass that. Howler's built-in autoUnlock (on by
- * default) handles this gracefully: if the browser blocks the initial
- * play() call, Howler automatically starts it on the visitor's very
- * first click/tap/keypress anywhere on the page, so it still starts
- * "on" without them needing to specifically hit this toggle.
+ * Defaults to on. Browsers block unmuted audio autoplay before any
+ * real user interaction with the page — no code can bypass that, it's
+ * a hard browser security policy, not a bug. So this: (1) attempts to
+ * play immediately on mount, for the (rare) cases that's allowed, and
+ * (2) explicitly starts playback on the visitor's very first
+ * click/tap/keypress anywhere on the page as a deterministic fallback,
+ * rather than relying only on Howler's internal auto-unlock queue
+ * (which can race with React remounting this component in dev mode).
  */
 export default function SoundToggle() {
   const [isOn, setIsOn] = useState(true);
   const howlRef = useRef<Howl | null>(null);
+  const userPausedRef = useRef(false);
 
   useEffect(() => {
     const howl = new Howl({
@@ -31,7 +35,20 @@ export default function SoundToggle() {
     });
     howlRef.current = howl;
 
+    const tryPlay = () => {
+      if (!userPausedRef.current && !howl.playing()) {
+        howl.play();
+      }
+    };
+
+    UNLOCK_EVENTS.forEach((event) =>
+      document.addEventListener(event, tryPlay, { passive: true })
+    );
+
     return () => {
+      UNLOCK_EVENTS.forEach((event) =>
+        document.removeEventListener(event, tryPlay)
+      );
       howl.unload();
     };
   }, []);
@@ -42,7 +59,9 @@ export default function SoundToggle() {
 
     if (isOn) {
       howl.pause();
+      userPausedRef.current = true;
     } else {
+      userPausedRef.current = false;
       howl.play();
     }
     setIsOn(!isOn);
