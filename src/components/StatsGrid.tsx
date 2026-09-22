@@ -20,9 +20,8 @@ type ToolCard = {
 };
 
 const STATS: StatCard[] = [
-  { label: "Years of Experience", value: "6.8+", colStart: "lg:col-start-1", rowStart: "lg:row-start-1" },
+  { label: "Years of Experience", value: "8+", colStart: "lg:col-start-1", rowStart: "lg:row-start-1" },
   { label: "Certifications", value: "23+", colStart: "lg:col-start-2", rowStart: "lg:row-start-2" },
-  { label: "Companies", value: "6+", colStart: "lg:col-start-3", rowStart: "lg:row-start-3" },
 ];
 
 const TOOLS: ToolCard[] = [
