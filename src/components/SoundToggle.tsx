@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 
 const UNLOCK_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
 
@@ -36,6 +36,11 @@ export default function SoundToggle() {
     howlRef.current = howl;
 
     const tryPlay = () => {
+      // The shared Web Audio context can still be "suspended" even
+      // after play() is called — that produces silence with no error.
+      if (Howler.ctx && Howler.ctx.state === "suspended") {
+        Howler.ctx.resume();
+      }
       if (!userPausedRef.current && !howl.playing()) {
         howl.play();
       }
