@@ -3,38 +3,38 @@
 import { motion } from "framer-motion";
 import GlitchText from "./GlitchText";
 
-const GITHUB = "https://github.com/nulldevops007";
+const LINKEDIN = "https://www.linkedin.com/in/abhishek-singh-26061997/";
 
 const PROJECTS = [
   {
     title: "5-Day Threat Hunting Exercise",
     tag: "Threat Hunting",
     description: "Structured daily threat hunting program for the team, built on Elastic.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "IOC Categorization Tool",
     tag: "Automation",
     description: "Python + Selenium automation for open-source threat intel IOC submission.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "SecurText",
     tag: "LLM Tool",
     description: "ChatGPT-based incident investigation summarizer.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Query Solution",
     tag: "App",
     description: "Platform connecting students with PhD experts for live doubt-clearing sessions.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Supply Chain Management on Blockchain",
     tag: "Blockchain",
     description: "Hyperledger-based system for trustworthy courier and delivery tracking.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Swisto",
@@ -46,19 +46,19 @@ const PROJECTS = [
     title: "User Identification System",
     tag: "Blockchain",
     description: "Blockchain-based user authentication with encrypted personal data blocks.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Captcha Generator",
     tag: "Python",
     description: "Custom captcha generator built in Python.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Budget Tracker",
     tag: "C++",
     description: "Budget management tool built in C/C++ with a custom Windows API header.",
-    href: GITHUB,
+    href: LINKEDIN,
   },
   {
     title: "Mentoring at Topmate",
