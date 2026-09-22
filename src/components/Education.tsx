@@ -1,3 +1,5 @@
+import GlitchText from "./GlitchText";
+
 const EDUCATION = [
   {
     school: "IIT Guwahati (E&ICT Academy)",
@@ -43,14 +45,28 @@ export default function Education() {
     <div className="grid grid-cols-1 gap-12 sm:grid-cols-2">
       <div>
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
-          Education
+          <GlitchText text="Education" />
         </h3>
         <ul className="space-y-4">
-          {EDUCATION.map((item) => (
+          {EDUCATION.map((item, i) => (
             <li key={item.school}>
-              <p className="font-semibold">{item.program}</p>
+              <p className="font-semibold">
+                <GlitchText
+                  text={item.program}
+                  startDelay={i * 150}
+                  tickMs={25}
+                  lockEvery={2}
+                  charsPerTick={2}
+                />
+              </p>
               <p className="text-sm text-foreground/60">
-                {item.school} · {item.detail}
+                <GlitchText
+                  text={`${item.school} · ${item.detail}`}
+                  startDelay={i * 150 + 200}
+                  tickMs={20}
+                  lockEvery={1}
+                  charsPerTick={2}
+                />
               </p>
             </li>
           ))}
@@ -59,14 +75,31 @@ export default function Education() {
 
       <div>
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
-          Certifications ({CERTIFICATIONS.length})
+          <GlitchText text={`Certifications (${CERTIFICATIONS.length})`} />
         </h3>
-        <ul className="max-h-80 space-y-3 overflow-y-auto pr-2">
-          {CERTIFICATIONS.map((cert) => (
+        <ul
+          className="max-h-80 space-y-3 overflow-y-auto pr-2"
+          data-lenis-prevent
+        >
+          {CERTIFICATIONS.map((cert, i) => (
             <li key={`${cert.title}-${cert.date}`} className="text-sm">
-              <p className="text-foreground/80">{cert.title}</p>
+              <p className="text-foreground/80">
+                <GlitchText
+                  text={cert.title}
+                  startDelay={i * 40}
+                  tickMs={20}
+                  lockEvery={1}
+                  charsPerTick={2}
+                />
+              </p>
               <p className="text-xs text-muted">
-                {cert.issuer} · {cert.date}
+                <GlitchText
+                  text={`${cert.issuer} · ${cert.date}`}
+                  startDelay={i * 40 + 100}
+                  tickMs={20}
+                  lockEvery={1}
+                  charsPerTick={2}
+                />
               </p>
             </li>
           ))}

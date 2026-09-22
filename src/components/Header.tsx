@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import SoundToggle from "./SoundToggle";
 import MobileMenu from "./MobileMenu";
+import GlitchText from "./GlitchText";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -19,17 +20,17 @@ export default function Header() {
       className="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 sm:px-10"
     >
       <Link href="/" className="text-sm font-semibold tracking-widest uppercase">
-        Abhishek Singh
+        <GlitchText text="Abhishek Singh" />
       </Link>
 
       <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-widest sm:flex">
-        {NAV_LINKS.map((link) => (
+        {NAV_LINKS.map((link, i) => (
           <a
             key={link.href}
             href={link.href}
             className="text-foreground/80 transition-colors hover:text-accent"
           >
-            {link.label}
+            <GlitchText text={link.label} startDelay={i * 150} />
           </a>
         ))}
       </nav>

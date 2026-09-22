@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import GlitchText from "./GlitchText";
 
 const GITHUB = "https://github.com/nulldevops007";
 
@@ -101,21 +102,27 @@ export default function ProjectGrid() {
                   isGreen ? "text-black/70" : "text-accent"
                 }`}
               >
-                {project.tag}
+                <GlitchText text={project.tag} />
               </span>
               <h3
                 className={`mt-1 text-xl font-semibold ${
                   isGreen ? "text-black" : "text-foreground"
                 }`}
               >
-                {project.title}
+                <GlitchText text={project.title} startDelay={150} />
               </h3>
               <p
                 className={`mt-2 text-sm ${
                   isGreen ? "text-black/60" : "text-foreground/60"
                 }`}
               >
-                {project.description}
+                <GlitchText
+                  text={project.description}
+                  startDelay={400}
+                  tickMs={25}
+                  lockEvery={2}
+                  charsPerTick={2}
+                />
               </p>
             </motion.div>
 

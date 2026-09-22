@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import GlitchText from "./GlitchText";
 
 const CARD_CLIP =
   "polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)";
@@ -52,11 +53,11 @@ function Card({
       className={`relative flex h-56 flex-col justify-between border-l-4 border-black/20 bg-[#7f9d43] p-5 sm:h-64 ${colStart} ${rowStart}`}
     >
       <span className="text-right text-xs font-bold uppercase tracking-widest text-black/80">
-        {label}
+        <GlitchText text={label} tickMs={25} lockEvery={2} charsPerTick={2} />
       </span>
       {value && (
         <span className="text-6xl font-black leading-none text-black sm:text-7xl">
-          {value}
+          <GlitchText text={value} startDelay={200} />
         </span>
       )}
     </motion.div>

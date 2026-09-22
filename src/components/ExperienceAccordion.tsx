@@ -1,6 +1,7 @@
 "use client";
 
 import * as Accordion from "@radix-ui/react-accordion";
+import GlitchText from "./GlitchText";
 
 const POSITIONS = [
   {
@@ -69,10 +70,16 @@ export default function ExperienceAccordion() {
             <Accordion.Trigger className="group flex w-full items-center justify-between gap-4 py-6 text-left">
               <span>
                 <span className="block text-lg font-semibold">
-                  {position.role}
+                  <GlitchText text={position.role} tickMs={25} lockEvery={2} charsPerTick={2} />
                 </span>
                 <span className="block text-sm text-muted">
-                  {position.company} · {position.period}
+                  <GlitchText
+                    text={`${position.company} · ${position.period}`}
+                    startDelay={200}
+                    tickMs={25}
+                    lockEvery={2}
+                    charsPerTick={2}
+                  />
                 </span>
               </span>
               <span className="shrink-0 font-mono text-xl text-muted transition-transform group-data-[state=open]:rotate-45">

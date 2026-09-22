@@ -1,3 +1,5 @@
+import GlitchText from "./GlitchText";
+
 const SOCIAL_LINKS = [
   {
     label: "LinkedIn",
@@ -11,14 +13,16 @@ export default function Footer() {
     <footer className="border-t border-white/10 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-2xl font-semibold tracking-tight">Abhishek Singh</p>
+          <p className="text-2xl font-semibold tracking-tight">
+            <GlitchText text="Abhishek Singh" />
+          </p>
           <p className="mt-2 text-sm text-muted">
             &copy; {new Date().getFullYear()}. All rights reserved.
           </p>
         </div>
 
         <nav className="flex flex-wrap gap-6 text-sm font-medium uppercase tracking-wide text-foreground/80">
-          {SOCIAL_LINKS.map((link) => (
+          {SOCIAL_LINKS.map((link, i) => (
             <a
               key={link.label}
               href={link.href}
@@ -26,7 +30,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="transition-colors hover:text-accent"
             >
-              {link.label}
+              <GlitchText text={link.label} startDelay={i * 150} />
             </a>
           ))}
         </nav>
