@@ -89,11 +89,14 @@ export default function GlitchText({
 
   return (
     <span ref={ref} className="relative inline-block align-baseline">
-      <span className={`invisible ${className ?? ""}`} aria-hidden="true">
+      <span
+        className={`invisible whitespace-pre-wrap ${className ?? ""}`}
+        aria-hidden="true"
+      >
         {text}
       </span>
       <span
-        className={`absolute inset-0 ${className ?? ""}`}
+        className={`absolute inset-0 whitespace-pre-wrap ${className ?? ""}`}
         aria-label={text}
       >
         {output}

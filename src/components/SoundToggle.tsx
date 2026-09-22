@@ -6,23 +6,33 @@ import { Howl } from "howler";
 /**
  * Toggles ambient background sound. Expects an audio file at
  * public/ambient.mp3 — until you add one, playback silently no-ops.
+ *
+ * Defaults to on and attempts to autoplay on mount. Browsers block
+ * unmuted audio autoplay before any user interaction with the page —
+ * no code can fully bypass that. Howler's built-in autoUnlock (on by
+ * default) handles this gracefully: if the browser blocks the initial
+ * play() call, Howler automatically starts it on the visitor's very
+ * first click/tap/keypress anywhere on the page, so it still starts
+ * "on" without them needing to specifically hit this toggle.
  */
 export default function SoundToggle() {
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(true);
   const howlRef = useRef<Howl | null>(null);
 
   useEffect(() => {
-    howlRef.current = new Howl({
+    const howl = new Howl({
       src: ["/ambient.mp3"],
       loop: true,
       volume: 0.4,
+      autoplay: true,
       onloaderror: () => {
         // No ambient.mp3 yet — toggle stays a no-op until one is added.
       },
     });
+    howlRef.current = howl;
 
     return () => {
-      howlRef.current?.unload();
+      howl.unload();
     };
   }, []);
 
