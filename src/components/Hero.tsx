@@ -67,12 +67,10 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
         className="relative z-20 mt-10 max-w-md px-6 text-xl leading-snug text-foreground/90 sm:mt-16 sm:px-10 sm:text-2xl"
       >
-        I&apos;m Abhishek, a{" "}
+        I&apos;m a{" "}
         <span className="text-accent">Security Researcher</span> passionate
         about{" "}
-        <span className="font-mono text-muted">&lt;threat-hunting/&gt;</span>.
-        6.8+ years across detection engineering, cloud security, and
-        incident response.
+        <span className="font-mono text-muted">&lt;threat-hunting/&gt;</span>
       </motion.p>
 
       {/* Giant name, bottom */}
