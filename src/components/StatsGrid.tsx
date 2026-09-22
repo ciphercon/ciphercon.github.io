@@ -13,22 +13,12 @@ type StatCard = {
   rowStart: string;
 };
 
-type ToolCard = {
-  label: string;
-  colStart: string;
-  rowStart: string;
-};
-
 const STATS: StatCard[] = [
   { label: "Years of Experience", value: "8+", colStart: "lg:col-start-1", rowStart: "lg:row-start-1" },
   { label: "Certifications", value: "23+", colStart: "lg:col-start-2", rowStart: "lg:row-start-2" },
-];
-
-const TOOLS: ToolCard[] = [
-  { label: "Azure Sentinel", colStart: "lg:col-start-3", rowStart: "lg:row-start-1" },
-  { label: "MITRE ATT&CK", colStart: "lg:col-start-5", rowStart: "lg:row-start-1" },
-  { label: "Splunk", colStart: "lg:col-start-4", rowStart: "lg:row-start-2" },
-  { label: "Python / KQL", colStart: "lg:col-start-5", rowStart: "lg:row-start-3" },
+  { label: "AI Projects", value: "10+", colStart: "lg:col-start-3", rowStart: "lg:row-start-1" },
+  { label: "Publications", value: "3+", colStart: "lg:col-start-4", rowStart: "lg:row-start-2" },
+  { label: "YouTube Views", value: "15M+", colStart: "lg:col-start-5", rowStart: "lg:row-start-1" },
 ];
 
 function Card({
@@ -38,7 +28,7 @@ function Card({
   rowStart,
 }: {
   label: string;
-  value?: string;
+  value: string;
   colStart: string;
   rowStart: string;
 }) {
@@ -54,11 +44,9 @@ function Card({
       <span className="text-right text-xs font-bold uppercase tracking-widest text-black/80">
         <GlitchText text={label} tickMs={25} lockEvery={2} charsPerTick={2} />
       </span>
-      {value && (
-        <span className="text-6xl font-black leading-none text-black sm:text-7xl">
-          <GlitchText text={value} startDelay={200} />
-        </span>
-      )}
+      <span className="text-6xl font-black leading-none text-black sm:text-7xl">
+        <GlitchText text={value} startDelay={200} />
+      </span>
     </motion.div>
   );
 }
@@ -74,14 +62,6 @@ export default function StatsGrid() {
             value={stat.value}
             colStart={stat.colStart}
             rowStart={stat.rowStart}
-          />
-        ))}
-        {TOOLS.map((tool) => (
-          <Card
-            key={tool.label}
-            label={tool.label}
-            colStart={tool.colStart}
-            rowStart={tool.rowStart}
           />
         ))}
       </div>
