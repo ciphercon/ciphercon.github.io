@@ -14,6 +14,14 @@ const RING_2_RADIUS = 44;
 const INFLUENCE_PX = 90; // dock-effect radius of influence
 const MAX_SCALE = 1.9;
 
+// Math.cos/sin aren't guaranteed bit-identical across JS engine builds
+// (Node on the server vs the browser's V8 on the client), which caused a
+// hydration mismatch on the last decimal digit. Rounding to a fixed
+// precision guarantees the server and client strings always match.
+function round(n: number) {
+  return Math.round(n * 10000) / 10000;
+}
+
 function buildPositions() {
   const ring1 = CERTIFICATIONS.slice(0, RING_1_COUNT);
   const ring2 = CERTIFICATIONS.slice(RING_1_COUNT);
@@ -22,8 +30,8 @@ function buildPositions() {
   ring1.forEach((_, i) => {
     const angle = (2 * Math.PI * i) / ring1.length - Math.PI / 2;
     positions.push({
-      x: 50 + RING_1_RADIUS * Math.cos(angle),
-      y: 50 + RING_1_RADIUS * Math.sin(angle),
+      x: round(50 + RING_1_RADIUS * Math.cos(angle)),
+      y: round(50 + RING_1_RADIUS * Math.sin(angle)),
     });
   });
 
@@ -33,8 +41,8 @@ function buildPositions() {
       Math.PI / 2 +
       Math.PI / ring2.length;
     positions.push({
-      x: 50 + RING_2_RADIUS * Math.cos(angle),
-      y: 50 + RING_2_RADIUS * Math.sin(angle),
+      x: round(50 + RING_2_RADIUS * Math.cos(angle)),
+      y: round(50 + RING_2_RADIUS * Math.sin(angle)),
     });
   });
 
