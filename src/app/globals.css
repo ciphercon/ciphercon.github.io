@@ -5,16 +5,13 @@
   --foreground: #f4f4f5;
   --muted: #71717a;
 
-  /* One shared hue (~73°, chartreuse/lime) drives the whole green
-     palette: --accent is the fully-saturated pop color used on dark
-     surfaces (buttons, links, badges); --accent-bg and
-     --accent-surface are a tint and a shade of that exact same hue,
-     used for the full-bleed green sections and their card surfaces —
-     derived from one hue instead of three separately eyeballed
-     greens. */
+  /* Green palette, centralized as named tokens: --accent is the
+     saturated pop color on dark surfaces (buttons, links, badges),
+     --accent-bg is the full-bleed section background, and
+     --accent-surface is the card/tile surface on top of it. */
   --accent: #d4ff3d;
-  --accent-bg: hsl(73 70% 65%);
-  --accent-surface: hsl(73 35% 40%);
+  --accent-bg: #b6e83a;
+  --accent-surface: #7f9d43;
 }
 
 @theme inline {
