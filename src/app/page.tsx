@@ -5,6 +5,7 @@ import About from "@/components/About";
 import ProjectGrid from "@/components/ProjectGrid";
 import ExperienceAccordion from "@/components/ExperienceAccordion";
 import Education from "@/components/Education";
+import Vlogs from "@/components/Vlogs";
 import GlitchText from "@/components/GlitchText";
 
 export default function Home() {
@@ -23,6 +24,8 @@ export default function Home() {
         </h2>
         <About />
       </RevealSection>
+
+      <Vlogs />
 
       <section id="work" className="px-6 py-24 sm:px-10">
         <RevealSection>
