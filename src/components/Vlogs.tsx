@@ -30,9 +30,9 @@ const VIDEOS = [
 
 export default function Vlogs() {
   return (
-    <section className="w-full bg-[#b6e83a] px-6 py-24 sm:px-10">
+    <section className="w-full bg-accent-bg px-6 py-24 sm:px-10">
       <div className="mx-auto max-w-7xl">
-        <span className="mb-6 inline-block rounded-sm bg-black px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#b6e83a]">
+        <span className="mb-6 inline-block rounded-sm bg-black px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent-bg">
           <GlitchText text="Keep Watching" />
         </span>
 

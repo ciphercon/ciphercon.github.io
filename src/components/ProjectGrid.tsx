@@ -88,7 +88,7 @@ export default function ProjectGrid() {
             style={isGreen ? { clipPath: CARD_CLIP } : undefined}
             className={`group relative block aspect-[4/3] overflow-hidden ${
               isGreen
-                ? "border-l-4 border-black/20 bg-[#7f9d43]"
+                ? "border-l-4 border-black/20 bg-accent-surface"
                 : "rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950"
             }`}
           >

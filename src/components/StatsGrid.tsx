@@ -39,7 +39,7 @@ function Card({
       viewport={{ once: true, amount: 0.4 }}
       transition={{ duration: 0.5 }}
       style={{ clipPath: CARD_CLIP }}
-      className={`relative flex h-44 flex-col justify-between overflow-hidden border-l-4 border-black/20 bg-[#7f9d43] p-4 sm:h-56 sm:p-5 xl:h-64 ${colStart} ${rowStart}`}
+      className={`relative flex h-44 flex-col justify-between overflow-hidden border-l-4 border-black/20 bg-accent-surface p-4 sm:h-56 sm:p-5 xl:h-64 ${colStart} ${rowStart}`}
     >
       <span className="text-right text-[10px] font-bold uppercase tracking-widest text-black/80 sm:text-xs">
         <GlitchText text={label} tickMs={25} lockEvery={2} charsPerTick={2} />
@@ -53,7 +53,7 @@ function Card({
 
 export default function StatsGrid() {
   return (
-    <section className="w-full bg-[#b6e83a] px-6 py-20 sm:px-10">
+    <section className="w-full bg-accent-bg px-6 py-20 sm:px-10">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5 xl:grid-rows-3">
         {STATS.map((stat) => (
           <Card

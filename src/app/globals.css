@@ -3,14 +3,26 @@
 :root {
   --background: #09090b;
   --foreground: #f4f4f5;
-  --accent: #d4ff3d;
   --muted: #71717a;
+
+  /* One shared hue (~73°, chartreuse/lime) drives the whole green
+     palette: --accent is the fully-saturated pop color used on dark
+     surfaces (buttons, links, badges); --accent-bg and
+     --accent-surface are a tint and a shade of that exact same hue,
+     used for the full-bleed green sections and their card surfaces —
+     derived from one hue instead of three separately eyeballed
+     greens. */
+  --accent: #d4ff3d;
+  --accent-bg: hsl(73 70% 65%);
+  --accent-surface: hsl(73 35% 40%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-surface: var(--accent-surface);
   --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
