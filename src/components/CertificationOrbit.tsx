@@ -9,8 +9,8 @@ import { CERTIFICATIONS } from "@/data/certifications";
 type Cert = (typeof CERTIFICATIONS)[number];
 
 const RING_1_COUNT = 9;
-const RING_1_RADIUS = 26; // % of container
-const RING_2_RADIUS = 44;
+const RING_1_RADIUS = 20; // % of container
+const RING_2_RADIUS = 34;
 
 const INFLUENCE_PX = 140; // dock-effect radius of influence
 const MAX_SCALE = 1.5;
