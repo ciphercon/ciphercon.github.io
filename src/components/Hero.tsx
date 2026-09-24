@@ -73,7 +73,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-        className="relative z-20 mt-10 max-w-md px-6 text-xl leading-snug text-foreground/90 sm:mt-16 sm:px-10 sm:text-2xl"
+        className="relative z-20 mx-6 mt-10 max-w-md rounded-lg bg-black/55 px-4 py-3 text-xl leading-snug text-foreground/90 backdrop-blur-sm sm:mx-0 sm:mt-16 sm:max-w-md sm:rounded-none sm:bg-transparent sm:px-10 sm:py-0 sm:text-2xl sm:backdrop-blur-none"
       >
         <GlitchText text="I'm a " startDelay={400} tickMs={35} lockEvery={2} charsPerTick={2} />
         <GlitchText
