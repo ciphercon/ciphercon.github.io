@@ -3,7 +3,7 @@ import RevealSection from "@/components/RevealSection";
 import StatsGrid from "@/components/StatsGrid";
 import About from "@/components/About";
 import ProjectGrid from "@/components/ProjectGrid";
-import ExperienceAccordion from "@/components/ExperienceAccordion";
+import WorkedAt from "@/components/WorkedAt";
 import Education from "@/components/Education";
 import Vlogs from "@/components/Vlogs";
 import GlitchText from "@/components/GlitchText";
@@ -38,16 +38,7 @@ export default function Home() {
         </RevealSection>
       </section>
 
-      <section className="px-6 py-24 sm:px-10">
-        <RevealSection>
-          <h2 className="mb-10 text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-            <GlitchText text="Worked At" />
-          </h2>
-        </RevealSection>
-        <RevealSection>
-          <ExperienceAccordion />
-        </RevealSection>
-      </section>
+      <WorkedAt />
 
       <section className="px-6 py-24 sm:px-10">
         <RevealSection>
