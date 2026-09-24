@@ -136,30 +136,28 @@ export default function WorkedAt() {
         </div>
 
         <div className="lg:order-2">
-          <div className="relative aspect-[4/3] border border-white/15">
+          <div className="relative flex min-h-[260px] items-center justify-center border border-white/15 p-6 sm:min-h-[300px] sm:p-10 lg:min-h-[340px]">
             <span className="absolute -left-1 -top-1 text-muted">+</span>
             <span className="absolute -right-1 -top-1 text-muted">+</span>
             <span className="absolute -bottom-1 -left-1 text-muted">+</span>
             <span className="absolute -bottom-1 -right-1 text-muted">+</span>
 
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.p
                 key={active.company}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center overflow-y-auto p-8 sm:p-12"
+                className="max-w-sm text-center text-sm leading-relaxed text-foreground/80 sm:text-base"
               >
-                <p className="max-w-sm text-center text-sm leading-relaxed text-foreground/80 sm:text-base">
-                  <GlitchText
-                    text={active.description}
-                    tickMs={30}
-                    lockEvery={2}
-                    charsPerTick={1}
-                  />
-                </p>
-              </motion.div>
+                <GlitchText
+                  text={active.description}
+                  tickMs={30}
+                  lockEvery={2}
+                  charsPerTick={1}
+                />
+              </motion.p>
             </AnimatePresence>
           </div>
         </div>
