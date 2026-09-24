@@ -55,7 +55,7 @@ export default function Education() {
         {/* Mobile: simple scrollable list */}
         <div className="md:hidden">
           <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
-            <GlitchText text={`Certifications (${CERTIFICATIONS.length})`} />
+            <GlitchText text="Certifications" />
           </h3>
           <ul
             className="max-h-80 space-y-3 overflow-y-auto pr-2"
@@ -100,7 +100,7 @@ export default function Education() {
             <GlitchText text="Click a Node" />
           </span>
           <h3 className="text-5xl font-black uppercase tracking-tight sm:text-6xl">
-            <GlitchText text={`Certifications (${CERTIFICATIONS.length})`} />
+            <GlitchText text="Certifications" />
           </h3>
         </motion.div>
         <CertificationOrbit />

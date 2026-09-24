@@ -12,8 +12,8 @@ const RING_1_COUNT = 9;
 const RING_1_RADIUS = 26; // % of container
 const RING_2_RADIUS = 44;
 
-const INFLUENCE_PX = 110; // dock-effect radius of influence
-const MAX_SCALE = 1.6;
+const INFLUENCE_PX = 180; // dock-effect radius of influence
+const MAX_SCALE = 2.3;
 
 // Math.cos/sin aren't guaranteed bit-identical across JS engine builds
 // (Node on the server vs the browser's V8 on the client), which caused a
@@ -113,7 +113,7 @@ export default function CertificationOrbit() {
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto aspect-square w-full max-w-[820px]"
+      className="relative mx-auto aspect-square w-full max-w-[1500px]"
     >
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
@@ -137,7 +137,7 @@ export default function CertificationOrbit() {
 
       {/* Center */}
       <div
-        className="absolute left-1/2 top-1/2 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-background p-6 text-center sm:h-48 sm:w-48 lg:h-56 lg:w-56"
+        className="absolute left-1/2 top-1/2 flex h-48 w-48 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-background p-6 text-center md:h-56 md:w-56 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
       >
         <AnimatePresence mode="wait">
           {!selected ? (
@@ -148,10 +148,10 @@ export default function CertificationOrbit() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted sm:text-sm">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted md:text-sm">
                 <GlitchText text="Certifications" />
               </p>
-              <p className="mt-2 text-3xl font-black text-accent sm:text-4xl">
+              <p className="mt-2 text-4xl font-black text-accent md:text-5xl xl:text-6xl">
                 <GlitchText text={String(CERTIFICATIONS.length)} />
               </p>
             </motion.div>
@@ -162,7 +162,7 @@ export default function CertificationOrbit() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-sm font-semibold leading-snug sm:text-base"
+              className="text-base font-semibold leading-snug md:text-lg xl:text-xl"
             >
               <GlitchText
                 text={selected.title}
@@ -180,7 +180,7 @@ export default function CertificationOrbit() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-xs leading-relaxed text-foreground/80 sm:text-sm"
+              className="text-xs leading-relaxed text-foreground/80 md:text-sm xl:text-base"
             >
               <GlitchText
                 text={`${selected.blurb} — ${selected.issuer} · ${selected.date}.`}
@@ -216,7 +216,7 @@ export default function CertificationOrbit() {
                 type="button"
                 onClick={() => handleSelect(cert)}
                 style={{ transform: "scale(1)" }}
-                className={`group relative flex h-11 w-11 items-center justify-center rounded-xl border-2 p-2 shadow-lg transition-colors sm:h-12 sm:w-12 ${
+                className={`group relative flex h-16 w-16 items-center justify-center rounded-xl border-2 p-2.5 shadow-lg transition-colors md:h-20 md:w-20 lg:h-24 lg:w-24 ${
                   isActive
                     ? "border-accent bg-white"
                     : "border-white/15 bg-white hover:border-accent"
@@ -228,15 +228,15 @@ export default function CertificationOrbit() {
                     alt={`${cert.title} logo`}
                     fill
                     unoptimized
-                    className="object-contain p-1.5"
+                    className="object-contain p-2 md:p-2.5"
                   />
                 ) : (
-                  <span className="text-[10px] font-black uppercase tracking-tight text-background sm:text-xs">
+                  <span className="text-sm font-black uppercase tracking-tight text-background md:text-base">
                     {cert.logo.text}
                   </span>
                 )}
 
-                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[120px] -translate-x-1/2 text-center text-[8px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[160px] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100 md:text-xs">
                   {cert.title}
                 </span>
               </button>
