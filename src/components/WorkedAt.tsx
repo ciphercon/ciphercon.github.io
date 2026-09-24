@@ -70,16 +70,24 @@ function ListItem({
   index,
   isActive,
   onSelect,
+  direction,
+  stagger,
 }: {
   position: (typeof POSITIONS)[number];
   index: number;
   isActive: boolean;
   onSelect: () => void;
+  direction: "left" | "right";
+  stagger: number;
 }) {
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onSelect}
+      initial={{ opacity: 0, x: direction === "left" ? -40 : 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.5, delay: stagger * 0.08, ease: "easeOut" }}
       className={`flex w-full items-baseline gap-4 border px-5 py-4 text-left transition-colors ${
         isActive
           ? "border-accent bg-accent text-background"
@@ -103,7 +111,7 @@ function ListItem({
           {position.role}
         </span>
       </span>
-    </button>
+    </motion.button>
   );
 }
 
@@ -113,14 +121,20 @@ export default function WorkedAt() {
 
   return (
     <section className="px-6 py-24 sm:px-10">
-      <div className="mx-auto flex max-w-md flex-col items-center text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mx-auto flex max-w-md flex-col items-center text-center"
+      >
         <span className="mb-4 inline-block rounded-sm bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background">
           <GlitchText text="I've Been" />
         </span>
         <h2 className="text-5xl font-black uppercase tracking-tight sm:text-6xl">
           <GlitchText text="Worked At" />
         </h2>
-      </div>
+      </motion.div>
 
       <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-[1fr_1.3fr_1fr] lg:items-start">
         <div className="flex flex-col gap-3 lg:order-1">
@@ -131,12 +145,20 @@ export default function WorkedAt() {
               index={i}
               isActive={activeIndex === i}
               onSelect={() => setActiveIndex(i)}
+              direction="left"
+              stagger={i}
             />
           ))}
         </div>
 
         <div className="lg:order-2">
-          <div className="relative flex min-h-[280px] items-center justify-center border border-white/15 p-6 sm:min-h-[320px] sm:p-10 lg:min-h-[360px]">
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative flex min-h-[280px] items-center justify-center border border-white/15 p-6 sm:min-h-[320px] sm:p-10 lg:min-h-[360px]"
+          >
             <span className="absolute -left-1 -top-1 text-muted">+</span>
             <span className="absolute -right-1 -top-1 text-muted">+</span>
             <span className="absolute -bottom-1 -left-1 text-muted">+</span>
@@ -161,7 +183,7 @@ export default function WorkedAt() {
                 />
               </motion.p>
             </AnimatePresence>
-          </div>
+          </motion.div>
         </div>
 
         <div className="flex flex-col gap-3 lg:order-3">
@@ -172,6 +194,8 @@ export default function WorkedAt() {
               index={LEFT.length + i}
               isActive={activeIndex === LEFT.length + i}
               onSelect={() => setActiveIndex(LEFT.length + i)}
+              direction="right"
+              stagger={i}
             />
           ))}
         </div>

@@ -53,67 +53,85 @@ export default function Vlogs() {
         </p>
 
         <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-3">
-          {VIDEOS.map((video, i) => (
-            <motion.a
-              key={video.id}
-              href={video.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial="rest"
-              whileHover="hover"
-              animate="rest"
-              className={i % 2 === 1 ? "block sm:mt-16" : "block"}
-            >
+          {VIDEOS.map((video, i) => {
+            const col = i % 3;
+            const swipeFrom =
+              col === 0
+                ? { x: -60, y: 0 }
+                : col === 2
+                  ? { x: 60, y: 0 }
+                  : { x: 0, y: 60 };
+
+            return (
               <motion.div
-                variants={{ rest: { y: 0 }, hover: { y: -6 } }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-xl"
+                key={video.id}
+                initial={{ opacity: 0, ...swipeFrom }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+                className={i % 2 === 1 ? "sm:mt-16" : undefined}
               >
-                <Image
-                  src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`}
-                  alt={video.title}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-
-                <span className="absolute left-3 top-3 rounded-sm bg-black px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
-                  {video.channel}
-                </span>
-
-                <motion.span
-                  variants={{
-                    rest: { opacity: 0, scale: 0.85 },
-                    hover: { opacity: 1, scale: 1 },
-                  }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 flex items-center justify-center"
+                <motion.a
+                  href={video.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  className="block"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="ml-1 h-5 w-5 fill-black"
-                      aria-hidden="true"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </span>
-                </motion.span>
-              </motion.div>
+                  <motion.div
+                    variants={{ rest: { y: 0 }, hover: { y: -6 } }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-xl"
+                  >
+                    <Image
+                      src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`}
+                      alt={video.title}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
 
-              <h3 className="mt-4 text-base font-semibold leading-snug text-black">
-                <GlitchText
-                  text={video.title}
-                  tickMs={20}
-                  lockEvery={1}
-                  charsPerTick={2}
-                />
-              </h3>
-              <span className="mt-1 inline-block text-xs font-medium uppercase tracking-widest text-black/60">
-                Watch ↗
-              </span>
-            </motion.a>
-          ))}
+                    <span className="absolute left-3 top-3 rounded-sm bg-black px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
+                      {video.channel}
+                    </span>
+
+                    <motion.span
+                      variants={{
+                        rest: { opacity: 0, scale: 0.85 },
+                        hover: { opacity: 1, scale: 1 },
+                      }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="ml-1 h-5 w-5 fill-black"
+                          aria-hidden="true"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </span>
+                    </motion.span>
+                  </motion.div>
+
+                  <h3 className="mt-4 text-base font-semibold leading-snug text-black">
+                    <GlitchText
+                      text={video.title}
+                      tickMs={20}
+                      lockEvery={1}
+                      charsPerTick={2}
+                    />
+                  </h3>
+                  <span className="mt-1 inline-block text-xs font-medium uppercase tracking-widest text-black/60">
+                    Watch ↗
+                  </span>
+                </motion.a>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,18 +1,28 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import SkillsRow from "./SkillsRow";
 import GlitchText from "./GlitchText";
 
 export default function About() {
   return (
     <div className="grid grid-cols-1 gap-10 sm:grid-cols-[auto_1fr] sm:items-start">
-      <Image
-        src="/profile.jpg"
-        alt="Abhishek Singh"
-        width={160}
-        height={160}
-        className="h-40 w-40 rounded-full object-cover grayscale"
-        priority
-      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 12 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Image
+          src="/profile.jpg"
+          alt="Abhishek Singh"
+          width={160}
+          height={160}
+          className="h-40 w-40 rounded-full object-cover grayscale"
+          priority
+        />
+      </motion.div>
 
       <div>
         <p className="max-w-xl text-base text-foreground/70">

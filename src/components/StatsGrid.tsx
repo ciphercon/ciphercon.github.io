@@ -26,18 +26,20 @@ function Card({
   value,
   colStart,
   rowStart,
+  index,
 }: {
   label: string;
   value: string;
   colStart: string;
   rowStart: string;
+  index: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 28, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       style={{ clipPath: CARD_CLIP }}
       className={`relative flex h-44 flex-col justify-between overflow-hidden border-l-4 border-black/20 bg-accent-surface p-4 sm:h-56 sm:p-5 xl:h-64 ${colStart} ${rowStart}`}
     >
@@ -55,13 +57,14 @@ export default function StatsGrid() {
   return (
     <section className="w-full bg-accent-bg px-6 py-20 sm:px-10">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5 xl:grid-rows-2">
-        {STATS.map((stat) => (
+        {STATS.map((stat, i) => (
           <Card
             key={stat.label}
             label={stat.label}
             value={stat.value}
             colStart={stat.colStart}
             rowStart={stat.rowStart}
+            index={i}
           />
         ))}
       </div>

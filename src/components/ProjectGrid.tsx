@@ -77,65 +77,76 @@ export default function ProjectGrid() {
         const isGreen = index % 2 === 1;
 
         return (
-          <motion.a
+          <motion.div
             key={project.title}
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-            style={isGreen ? { clipPath: CARD_CLIP } : undefined}
-            className={`group relative block aspect-[4/3] overflow-hidden ${
-              isGreen
-                ? "border-l-4 border-black/20 bg-accent-bg"
-                : "rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950"
-            }`}
+            initial={{ opacity: 0, y: 28, scale: 0.94 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.5,
+              delay: (index % 6) * 0.07,
+              ease: "easeOut",
+            }}
           >
-            <motion.div
-              variants={{ rest: { y: 0 }, hover: { y: -4 } }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="absolute inset-0 flex flex-col justify-end p-6"
-            >
-              <span
-                className={`text-xs font-medium uppercase tracking-widest ${
-                  isGreen ? "text-black/70" : "text-accent"
-                }`}
-              >
-                <GlitchText text={project.tag} />
-              </span>
-              <h3
-                className={`mt-1 text-xl font-semibold ${
-                  isGreen ? "text-black" : "text-foreground"
-                }`}
-              >
-                <GlitchText text={project.title} startDelay={150} />
-              </h3>
-              <p
-                className={`mt-2 text-sm ${
-                  isGreen ? "text-black/60" : "text-foreground/60"
-                }`}
-              >
-                <GlitchText
-                  text={project.description}
-                  startDelay={400}
-                  tickMs={25}
-                  lockEvery={2}
-                  charsPerTick={2}
-                />
-              </p>
-            </motion.div>
-
-            <motion.span
-              variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
-              transition={{ duration: 0.2 }}
-              className={`absolute right-4 top-4 text-xs font-medium uppercase tracking-widest ${
-                isGreen ? "text-black/70" : "text-foreground/80"
+            <motion.a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+              style={isGreen ? { clipPath: CARD_CLIP } : undefined}
+              className={`group relative block aspect-[4/3] overflow-hidden ${
+                isGreen
+                  ? "border-l-4 border-black/20 bg-accent-bg"
+                  : "rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950"
               }`}
             >
-              Visit ↗
-            </motion.span>
-          </motion.a>
+              <motion.div
+                variants={{ rest: { y: 0 }, hover: { y: -4 } }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute inset-0 flex flex-col justify-end p-6"
+              >
+                <span
+                  className={`text-xs font-medium uppercase tracking-widest ${
+                    isGreen ? "text-black/70" : "text-accent"
+                  }`}
+                >
+                  <GlitchText text={project.tag} />
+                </span>
+                <h3
+                  className={`mt-1 text-xl font-semibold ${
+                    isGreen ? "text-black" : "text-foreground"
+                  }`}
+                >
+                  <GlitchText text={project.title} startDelay={150} />
+                </h3>
+                <p
+                  className={`mt-2 text-sm ${
+                    isGreen ? "text-black/60" : "text-foreground/60"
+                  }`}
+                >
+                  <GlitchText
+                    text={project.description}
+                    startDelay={400}
+                    tickMs={25}
+                    lockEvery={2}
+                    charsPerTick={2}
+                  />
+                </p>
+              </motion.div>
+
+              <motion.span
+                variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
+                transition={{ duration: 0.2 }}
+                className={`absolute right-4 top-4 text-xs font-medium uppercase tracking-widest ${
+                  isGreen ? "text-black/70" : "text-foreground/80"
+                }`}
+              >
+                Visit ↗
+              </motion.span>
+            </motion.a>
+          </motion.div>
         );
       })}
     </div>
