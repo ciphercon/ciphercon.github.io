@@ -21,6 +21,7 @@ export default function GlitchText({
   tickMs = 45,
   lockEvery = 2,
   charsPerTick = 1,
+  scrambleTail = false,
 }: {
   text: string;
   className?: string;
@@ -28,6 +29,10 @@ export default function GlitchText({
   tickMs?: number;
   lockEvery?: number;
   charsPerTick?: number;
+  /** Keep re-scrambling every not-yet-revealed character each tick
+   * (classic "decrypting" look) instead of leaving the tail blank
+   * with just a single scrambling cursor. */
+  scrambleTail?: boolean;
 }) {
   const [output, setOutput] = useState("");
   const ref = useRef<HTMLSpanElement>(null);
@@ -65,7 +70,7 @@ export default function GlitchText({
         for (let i = 0; i < text.length; i++) {
           if (i < revealCount || text[i] === " ") {
             result += text[i];
-          } else if (i === revealCount) {
+          } else if (scrambleTail || i === revealCount) {
             result += randomGlyph();
           }
         }
@@ -85,7 +90,7 @@ export default function GlitchText({
       clearTimeout(startTimer);
       if (intervalId) clearInterval(intervalId);
     };
-  }, [isVisible, text, startDelay, tickMs, lockEvery, charsPerTick]);
+  }, [isVisible, text, startDelay, tickMs, lockEvery, charsPerTick, scrambleTail]);
 
   return (
     <span ref={ref} className="relative inline-block align-baseline">
