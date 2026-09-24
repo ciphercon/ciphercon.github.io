@@ -136,7 +136,7 @@ export default function WorkedAt() {
         </div>
 
         <div className="lg:order-2">
-          <div className="relative flex min-h-[260px] items-center justify-center border border-white/15 p-6 sm:min-h-[300px] sm:p-10 lg:min-h-[340px]">
+          <div className="relative flex min-h-[280px] items-center justify-center border border-white/15 p-6 sm:min-h-[320px] sm:p-10 lg:min-h-[360px]">
             <span className="absolute -left-1 -top-1 text-muted">+</span>
             <span className="absolute -right-1 -top-1 text-muted">+</span>
             <span className="absolute -bottom-1 -left-1 text-muted">+</span>
@@ -149,14 +149,15 @@ export default function WorkedAt() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
-                className="max-w-sm text-center text-sm leading-relaxed text-foreground/80 sm:text-base"
+                className="max-w-md text-center text-base leading-relaxed text-foreground/80 sm:text-lg"
               >
                 <GlitchText
                   text={active.description}
-                  tickMs={30}
+                  tickMs={25}
                   lockEvery={1}
-                  charsPerTick={2}
+                  charsPerTick={3}
                   scrambleTail
+                  mixColors
                 />
               </motion.p>
             </AnimatePresence>
