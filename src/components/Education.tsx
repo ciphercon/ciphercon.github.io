@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import GlitchText from "./GlitchText";
 import CertificationOrbit from "./CertificationOrbit";
 import { CERTIFICATIONS } from "@/data/certifications";
@@ -86,9 +89,20 @@ export default function Education() {
 
       {/* Tablet/desktop: orbit */}
       <div className="mt-16 hidden md:block">
-        <h3 className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-muted">
-          <GlitchText text={`Certifications (${CERTIFICATIONS.length}) — click a node`} />
-        </h3>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mx-auto mb-8 flex max-w-md flex-col items-center text-center"
+        >
+          <span className="mb-4 inline-block rounded-sm bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background">
+            <GlitchText text="Click a Node" />
+          </span>
+          <h3 className="text-5xl font-black uppercase tracking-tight sm:text-6xl">
+            <GlitchText text={`Certifications (${CERTIFICATIONS.length})`} />
+          </h3>
+        </motion.div>
         <CertificationOrbit />
       </div>
     </div>
