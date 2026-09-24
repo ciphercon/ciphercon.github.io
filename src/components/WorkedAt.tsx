@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import GlitchText from "./GlitchText";
 
@@ -9,6 +10,7 @@ const POSITIONS = [
     company: "Microsoft",
     role: "Security Researcher II",
     period: "Oct 2022 — Present",
+    logo: "/logos/microsoft.svg",
     description:
       "Threat hunting, incident response, and detection engineering across MDI, MDO, MDA, and MDE. Configures ASR rules, oversees Azure AD security, builds Security Copilot models, and contributes to XDR research.",
   },
@@ -16,6 +18,7 @@ const POSITIONS = [
     company: "Crowe",
     role: "Cyber Security Analyst",
     period: "Jan 2022 — Oct 2022",
+    logo: "/logos/crowe.png",
     description:
       "Managed Detection & Response: monitored and responded to alerts via Carbon Black, built SOAR playbooks in SIEMplify, and ran MITRE ATT&CK-based threat hunting across Carbon Black, Anomali, and Elastic.",
   },
@@ -23,6 +26,7 @@ const POSITIONS = [
     company: "UnitedHealth Group",
     role: "Associate Security Analyst",
     period: "Mar 2021 — Jan 2022",
+    logo: "/logos/unitedhealth-group.svg",
     description:
       "Identified and mitigated phishing, malware, and scam campaigns. Built Splunk dashboards and IOC queries, investigated cloud alerts on Azure Sentinel, and used MITRE ATT&CK to map incident techniques.",
   },
@@ -30,6 +34,7 @@ const POSITIONS = [
     company: "Quick Heal",
     role: "Security Analyst Trainee",
     period: "Jul 2019 — Feb 2021",
+    logo: "/logos/quick-heal.svg",
     description:
       "Investigated social engineering, phishing, and spam attacks; built malware signatures from client endpoint data; worked across NGFW, EDR, and sandboxing tools.",
   },
@@ -37,6 +42,7 @@ const POSITIONS = [
     company: "Swisto",
     role: "Security Web Intern",
     period: "Jan 2019 — Jul 2019",
+    logo: null,
     description:
       "Penetration testing, application security, and secure code review during a 10-month application testing and delivery program.",
   },
@@ -44,12 +50,14 @@ const POSITIONS = [
     company: "Freelance",
     role: "Web Developer Trainee",
     period: "Sep 2018 — Jan 2019",
+    logo: null,
     description: "Early web development work, Jalandhar, Punjab.",
   },
   {
     company: "Teach Tech Services",
     role: "Trainer (Part-time)",
     period: "Jul 2018 — Jul 2019",
+    logo: null,
     description:
       "Conducted training on penetration testing, ethical hacking (beginner to advanced), digital forensics, and running a SOC business.",
   },
@@ -142,12 +150,26 @@ export default function WorkedAt() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center"
+                className="absolute inset-0 flex items-center justify-center p-8 sm:p-12"
               >
-                <span className="relative text-2xl font-bold uppercase tracking-tight text-accent sm:text-4xl">
-                  {active.company}
-                  <span className="absolute -right-6 -top-6 h-10 w-10 rounded-full border border-accent/60 sm:-right-8 sm:-top-8 sm:h-14 sm:w-14" />
-                </span>
+                {active.logo ? (
+                  <div className="relative flex h-full w-full max-w-[220px] items-center justify-center rounded-lg bg-white p-6 shadow-xl sm:max-w-[280px] sm:p-8">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={active.logo}
+                        alt={`${active.company} logo`}
+                        fill
+                        unoptimized
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <span className="relative text-2xl font-bold uppercase tracking-tight text-accent sm:text-4xl">
+                    {active.company}
+                    <span className="absolute -right-6 -top-6 h-10 w-10 rounded-full border border-accent/60 sm:-right-8 sm:-top-8 sm:h-14 sm:w-14" />
+                  </span>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -161,7 +183,12 @@ export default function WorkedAt() {
               transition={{ duration: 0.3 }}
               className="mt-6 text-center text-sm leading-relaxed text-foreground/70"
             >
-              {active.description}
+              <GlitchText
+                text={active.description}
+                tickMs={30}
+                lockEvery={2}
+                charsPerTick={1}
+              />
             </motion.p>
           </AnimatePresence>
         </div>
