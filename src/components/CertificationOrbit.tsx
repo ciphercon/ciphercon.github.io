@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import GlitchText from "./GlitchText";
 import { CERTIFICATIONS } from "@/data/certifications";
@@ -11,8 +12,8 @@ const RING_1_COUNT = 9;
 const RING_1_RADIUS = 26; // % of container
 const RING_2_RADIUS = 44;
 
-const INFLUENCE_PX = 90; // dock-effect radius of influence
-const MAX_SCALE = 1.9;
+const INFLUENCE_PX = 110; // dock-effect radius of influence
+const MAX_SCALE = 1.6;
 
 // Math.cos/sin aren't guaranteed bit-identical across JS engine builds
 // (Node on the server vs the browser's V8 on the client), which caused a
@@ -112,7 +113,7 @@ export default function CertificationOrbit() {
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto aspect-square w-full max-w-[700px]"
+      className="relative mx-auto aspect-square w-full max-w-[820px]"
     >
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
@@ -215,11 +216,27 @@ export default function CertificationOrbit() {
                 type="button"
                 onClick={() => handleSelect(cert)}
                 style={{ transform: "scale(1)" }}
-                className={`group relative flex h-3 w-3 items-center justify-center rounded-full transition-colors ${
-                  isActive ? "bg-accent" : "bg-white/40 hover:bg-accent"
+                className={`group relative flex h-11 w-11 items-center justify-center rounded-xl border-2 p-2 shadow-lg transition-colors sm:h-12 sm:w-12 ${
+                  isActive
+                    ? "border-accent bg-white"
+                    : "border-white/15 bg-white hover:border-accent"
                 }`}
               >
-                <span className="pointer-events-none absolute left-1/2 top-4 w-max max-w-[110px] -translate-x-1/2 text-center text-[8px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                {cert.logo.type === "image" ? (
+                  <Image
+                    src={cert.logo.src}
+                    alt={`${cert.title} logo`}
+                    fill
+                    unoptimized
+                    className="object-contain p-1.5"
+                  />
+                ) : (
+                  <span className="text-[10px] font-black uppercase tracking-tight text-background sm:text-xs">
+                    {cert.logo.text}
+                  </span>
+                )}
+
+                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[120px] -translate-x-1/2 text-center text-[8px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100">
                   {cert.title}
                 </span>
               </button>
