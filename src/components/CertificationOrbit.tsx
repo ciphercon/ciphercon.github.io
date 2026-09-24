@@ -12,8 +12,8 @@ const RING_1_COUNT = 9;
 const RING_1_RADIUS = 26; // % of container
 const RING_2_RADIUS = 44;
 
-const INFLUENCE_PX = 180; // dock-effect radius of influence
-const MAX_SCALE = 2.3;
+const INFLUENCE_PX = 140; // dock-effect radius of influence
+const MAX_SCALE = 1.5;
 
 // Math.cos/sin aren't guaranteed bit-identical across JS engine builds
 // (Node on the server vs the browser's V8 on the client), which caused a
@@ -236,7 +236,7 @@ export default function CertificationOrbit() {
                   </span>
                 )}
 
-                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[160px] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100 md:text-xs">
+                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[130px] -translate-x-1/2 text-center text-[7px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100 md:text-[8px]">
                   {cert.title}
                 </span>
               </button>
