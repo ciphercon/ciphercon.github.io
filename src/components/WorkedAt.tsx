@@ -153,9 +153,9 @@ export default function WorkedAt() {
               >
                 <GlitchText
                   text={active.description}
-                  tickMs={30}
+                  tickMs={25}
                   lockEvery={2}
-                  charsPerTick={1}
+                  charsPerTick={2}
                 />
               </motion.p>
             </AnimatePresence>
