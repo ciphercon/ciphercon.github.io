@@ -216,7 +216,7 @@ export default function CertificationOrbit() {
                 type="button"
                 onClick={() => handleSelect(cert)}
                 style={{ transform: "scale(1)" }}
-                className={`group relative flex h-16 w-16 items-center justify-center rounded-full border-2 p-2.5 shadow-lg transition-colors md:h-20 md:w-20 lg:h-24 lg:w-24 ${
+                className={`group relative flex h-16 w-16 items-center justify-center rounded-xl border-2 p-2.5 shadow-lg transition-colors md:h-20 md:w-20 lg:h-24 lg:w-24 ${
                   isActive
                     ? "border-accent bg-white"
                     : "border-white/15 bg-white hover:border-accent"
@@ -228,7 +228,7 @@ export default function CertificationOrbit() {
                     alt={`${cert.title} logo`}
                     fill
                     unoptimized
-                    className="object-contain p-3 md:p-3.5"
+                    className="object-contain p-2 md:p-2.5"
                   />
                 ) : (
                   <span className="text-sm font-black uppercase tracking-tight text-background md:text-base">
