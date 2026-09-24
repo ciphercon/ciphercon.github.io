@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Howl, Howler } from "howler";
 
 const UNLOCK_EVENTS = ["pointerdown", "keydown", "touchstart"] as const;
-const GAP_MS = 5000;
-const PLAYLIST = ["/ride-or-die.mp3", "/ambient.mp3"];
 
 function resumeAudioContext() {
   if (Howler.ctx && Howler.ctx.state === "suspended") {
@@ -14,8 +12,8 @@ function resumeAudioContext() {
 }
 
 /**
- * Plays a two-track playlist on loop, with a 5s silent gap between
- * each track (ride-or-die -> 5s gap -> ambient -> 5s gap -> repeat).
+ * Toggles ambient background sound. Expects an audio file at
+ * public/ambient.mp3 — until you add one, playback silently no-ops.
  *
  * Defaults to on. Browsers block unmuted audio autoplay before any
  * real user interaction with the page — no code can bypass that, it's
@@ -31,48 +29,31 @@ function resumeAudioContext() {
  */
 export default function SoundToggle() {
   const [isOn, setIsOn] = useState(true);
-  const howlsRef = useRef<Howl[]>([]);
-  const currentIndexRef = useRef(0);
-  const gapTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const howlRef = useRef<Howl | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const userPausedRef = useRef(false);
 
   useEffect(() => {
-    const playNext = () => {
-      gapTimeoutRef.current = null;
-      if (userPausedRef.current) return;
-      currentIndexRef.current = (currentIndexRef.current + 1) % PLAYLIST.length;
-      resumeAudioContext();
-      howlsRef.current[currentIndexRef.current]?.play();
-    };
-
-    const howls = PLAYLIST.map(
-      (src, i) =>
-        new Howl({
-          src: [src],
-          loop: false,
-          volume: 0.4,
-          autoplay: i === 0,
-          onplay: () => setIsOn(true),
-          onpause: () => setIsOn(false),
-          onstop: () => setIsOn(false),
-          onend: () => {
-            gapTimeoutRef.current = setTimeout(playNext, GAP_MS);
-          },
-          onloaderror: () => {
-            // Track missing/failed to load — it just won't play.
-          },
-        })
-    );
-    howlsRef.current = howls;
+    const howl = new Howl({
+      src: ["/ambient.mp3"],
+      loop: true,
+      volume: 0.4,
+      autoplay: true,
+      onplay: () => setIsOn(true),
+      onpause: () => setIsOn(false),
+      onstop: () => setIsOn(false),
+      onloaderror: () => {
+        // No ambient.mp3 yet — toggle stays a no-op until one is added.
+      },
+    });
+    howlRef.current = howl;
 
     const tryPlay = (e: Event) => {
       // The toggle button handles its own clicks explicitly below.
       if (buttonRef.current?.contains(e.target as Node)) return;
       resumeAudioContext();
-      const current = howlsRef.current[currentIndexRef.current];
-      if (!userPausedRef.current && current && !current.playing()) {
-        current.play();
+      if (!userPausedRef.current && !howl.playing()) {
+        howl.play();
       }
     };
 
@@ -84,26 +65,21 @@ export default function SoundToggle() {
       UNLOCK_EVENTS.forEach((event) =>
         document.removeEventListener(event, tryPlay)
       );
-      if (gapTimeoutRef.current) clearTimeout(gapTimeoutRef.current);
-      howls.forEach((h) => h.unload());
+      howl.unload();
     };
   }, []);
 
   const toggle = () => {
-    const current = howlsRef.current[currentIndexRef.current];
-    if (!current) return;
+    const howl = howlRef.current;
+    if (!howl) return;
 
-    if (current.playing()) {
-      current.pause();
+    if (howl.playing()) {
+      howl.pause();
       userPausedRef.current = true;
-      if (gapTimeoutRef.current) {
-        clearTimeout(gapTimeoutRef.current);
-        gapTimeoutRef.current = null;
-      }
     } else {
       userPausedRef.current = false;
       resumeAudioContext();
-      current.play();
+      howl.play();
     }
   };
 
