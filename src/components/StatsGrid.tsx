@@ -54,7 +54,7 @@ function Card({
 export default function StatsGrid() {
   return (
     <section className="w-full bg-accent-bg px-6 py-20 sm:px-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5 xl:grid-rows-3">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-5 xl:grid-rows-2">
         {STATS.map((stat) => (
           <Card
             key={stat.label}
