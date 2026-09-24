@@ -236,7 +236,7 @@ export default function CertificationOrbit() {
                   </span>
                 )}
 
-                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[130px] -translate-x-1/2 text-center text-[7px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100 md:text-[8px]">
+                <span className="pointer-events-none absolute left-1/2 top-full mt-2 w-max max-w-[130px] -translate-x-1/2 text-center text-[9px] font-medium uppercase leading-tight tracking-wide text-muted opacity-0 transition-opacity group-hover:opacity-100 md:text-[10px]">
                   {cert.title}
                 </span>
               </button>
