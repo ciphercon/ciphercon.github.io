@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import GlitchText from "./GlitchText";
 
@@ -150,47 +149,19 @@ export default function WorkedAt() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center p-8 sm:p-12"
+                className="absolute inset-0 flex items-center justify-center overflow-y-auto p-8 sm:p-12"
               >
-                {active.logo ? (
-                  <div className="relative flex h-full w-full max-w-[220px] items-center justify-center rounded-lg bg-white p-6 shadow-xl sm:max-w-[280px] sm:p-8">
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={active.logo}
-                        alt={`${active.company} logo`}
-                        fill
-                        unoptimized
-                        className="object-contain"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <span className="relative text-2xl font-bold uppercase tracking-tight text-accent sm:text-4xl">
-                    {active.company}
-                    <span className="absolute -right-6 -top-6 h-10 w-10 rounded-full border border-accent/60 sm:-right-8 sm:-top-8 sm:h-14 sm:w-14" />
-                  </span>
-                )}
+                <p className="max-w-sm text-center text-sm leading-relaxed text-foreground/80 sm:text-base">
+                  <GlitchText
+                    text={active.description}
+                    tickMs={30}
+                    lockEvery={2}
+                    charsPerTick={1}
+                  />
+                </p>
               </motion.div>
             </AnimatePresence>
           </div>
-
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={active.company}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-6 text-center text-sm leading-relaxed text-foreground/70"
-            >
-              <GlitchText
-                text={active.description}
-                tickMs={30}
-                lockEvery={2}
-                charsPerTick={1}
-              />
-            </motion.p>
-          </AnimatePresence>
         </div>
 
         <div className="flex flex-col gap-3 lg:order-3">
