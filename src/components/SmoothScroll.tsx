@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
-import { loaderDone, provideScroll } from "@/lib/store";
+import { loaderDone, provideScroll, scheduleThemeSync } from "@/lib/store";
 
 let lenisInstance: Lenis | null = null;
 
@@ -30,6 +30,13 @@ export default function SmoothScroll({
     lenisInstance = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
+
+    // Header colours follow the surface under it (see scheduleThemeSync).
+    window.addEventListener("scroll", scheduleThemeSync, { passive: true });
+    window.addEventListener("resize", scheduleThemeSync);
+    ScrollTrigger.addEventListener("refresh", scheduleThemeSync);
+    scheduleThemeSync();
+
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
@@ -46,6 +53,9 @@ export default function SmoothScroll({
 
     return () => {
       off();
+      window.removeEventListener("scroll", scheduleThemeSync);
+      window.removeEventListener("resize", scheduleThemeSync);
+      ScrollTrigger.removeEventListener("refresh", scheduleThemeSync);
       gsap.ticker.remove(raf);
       lenis.destroy();
       lenisInstance = null;

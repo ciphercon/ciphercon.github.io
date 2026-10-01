@@ -267,7 +267,12 @@ const GlitchCanvas = forwardRef<GlitchCanvasRef, Props>(function GlitchCanvas(
     let ready = false;
     const seed = Math.random() * 100;
     const t0 = performance.now();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Rendered at 1x and upscaled pixelated: the LCD mask is one CSS pixel
+    // per stripe either way, so it looks the same at a quarter of the cost.
+    const dpr = 1;
+    // ~30fps is plenty for the slow band drift and the glitch bursts.
+    const FRAME_MS = 31;
+    let lastDraw = -Infinity;
 
     const resize = () => {
       const r = canvas.getBoundingClientRect();
@@ -329,7 +334,10 @@ const GlitchCanvas = forwardRef<GlitchCanvasRef, Props>(function GlitchCanvas(
         }
         st.nextAuto = t + (a + Math.random() * (b - a)) * 1000;
       }
-      draw(t);
+      if (t - lastDraw >= FRAME_MS) {
+        draw(t);
+        lastDraw = t;
+      }
       if (!reduce && st.visible && st.active) raf = requestAnimationFrame(loop);
     };
 
@@ -371,7 +379,14 @@ const GlitchCanvas = forwardRef<GlitchCanvasRef, Props>(function GlitchCanvas(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceKey, mode, heightFrac, align[0], align[1]]);
 
-  return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      style={{ imageRendering: "pixelated" }}
+      aria-hidden="true"
+    />
+  );
 });
 
 export default GlitchCanvas;

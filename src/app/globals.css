@@ -66,6 +66,7 @@
   --cursor-arc: var(--lime);
   --pill-bg: transparent;
   --pill-border: #3a3d47;
+  --grid-line: #1d1e22;
 }
 
 :root[data-theme="lime"] {
@@ -81,6 +82,7 @@
   --cursor-arc: var(--purple);
   --pill-bg: #4b6b1c;
   --pill-border: #4b6b1c;
+  --grid-line: #80d311;
 }
 
 /* Pinned desktop layout from 1200px; tablets and small windows stack. */

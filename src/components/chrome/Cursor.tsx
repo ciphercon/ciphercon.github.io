@@ -36,6 +36,19 @@ export default function Cursor() {
     let scale = 1;
     let targetScale = 1;
     let shown = 0;
+    let lastRing = "";
+    let lastOpacity = "";
+    let lastArc = "";
+    // Page height is cached (re-measured on resize) instead of being read
+    // every frame, which would force a style/layout flush mid-frame.
+    let maxScroll = 1;
+    const measure = () => {
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    window.addEventListener("resize", measure);
 
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
@@ -58,11 +71,22 @@ export default function Cursor() {
       pointer.ry += (pointer.y - pointer.ry) * ease;
       scale += (targetScale - scale) * 0.18;
       shown += ((pointer.inside ? 1 : 0) - shown) * 0.15;
-      ring.style.transform = `translate3d(${pointer.rx - SIZE / 2}px, ${pointer.ry - SIZE / 2}px, 0) scale(${scale.toFixed(3)})`;
-      ring.style.opacity = shown.toFixed(3);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      arc.style.strokeDashoffset = String(CIRC * (1 - p));
+      const nextRing = `translate3d(${(pointer.rx - SIZE / 2).toFixed(1)}px, ${(pointer.ry - SIZE / 2).toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+      if (nextRing !== lastRing) {
+        ring.style.transform = nextRing;
+        lastRing = nextRing;
+      }
+      const nextOpacity = shown.toFixed(2);
+      if (nextOpacity !== lastOpacity) {
+        ring.style.opacity = nextOpacity;
+        lastOpacity = nextOpacity;
+      }
+      const p = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+      const nextArc = (CIRC * (1 - p)).toFixed(1);
+      if (nextArc !== lastArc) {
+        arc.style.strokeDashoffset = nextArc;
+        lastArc = nextArc;
+      }
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -72,6 +96,8 @@ export default function Cursor() {
       window.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("pointerleave", onLeave);
       gsap.ticker.remove(tick);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
     };
   }, [enabled]);
 

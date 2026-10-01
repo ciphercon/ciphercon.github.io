@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ScrollTrigger } from "@/lib/gsap";
-import { setTheme, registerAnchor } from "@/lib/store";
+import { registerAnchor } from "@/lib/store";
 import { VIDEOS, VLOGS_COPY } from "@/data/vlogs";
 import Scramble from "@/components/ui/Scramble";
 import PixelEdge from "@/components/fx/PixelEdge";
@@ -13,21 +12,11 @@ export default function Vlogs() {
   useEffect(() => {
     const el = document.getElementById("vlogs");
     if (!el) return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top top+=40",
-      end: "bottom top+=40",
-      onToggle: (self) => self.isActive && setTheme("lime"),
-    });
-    const off = registerAnchor("vlogs", () => el.getBoundingClientRect().top + window.scrollY);
-    return () => {
-      st.kill();
-      off();
-    };
+    return registerAnchor("vlogs", () => el.getBoundingClientRect().top + window.scrollY);
   }, []);
 
   return (
-    <section id="vlogs" className="on-lime relative bg-lime px-[var(--edge)] pb-32 pt-24 lg:pb-44 lg:pt-32">
+    <section id="vlogs" data-surface="lime" className="on-lime relative bg-lime px-[var(--edge)] pb-32 pt-24 lg:pb-44 lg:pt-32">
       <PixelEdge color="#9df133" />
 
       <div className="max-w-[calc(var(--col-w)*2)]">
@@ -56,7 +45,8 @@ export default function Vlogs() {
             <img
               src={`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`}
               alt=""
-              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               className="h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110"
             />
           </WorkCard>

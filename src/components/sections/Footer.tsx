@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
-import { setTheme } from "@/lib/store";
 import { FOOTER, SITE } from "@/data/site";
 import Scramble, { type ScrambleRef } from "@/components/ui/Scramble";
 import DotMatrix from "@/components/fx/DotMatrix";
@@ -30,8 +29,10 @@ export default function Footer() {
     const sentinel = document.getElementById("footer-sentinel");
     if (!footer || !inner || !sentinel) return;
 
+    let footerH = footer.offsetHeight;
     const setHeight = () => {
-      document.documentElement.style.setProperty("--footer-h", `${footer.offsetHeight}px`);
+      footerH = footer.offsetHeight;
+      document.documentElement.style.setProperty("--footer-h", `${footerH}px`);
       ScrollTrigger.refresh();
     };
     const ro = new ResizeObserver(setHeight);
@@ -41,12 +42,12 @@ export default function Footer() {
     const st = ScrollTrigger.create({
       trigger: sentinel,
       start: "top bottom",
-      end: () => `+=${footer.offsetHeight}`,
+      end: () => `+=${footerH}`,
       onUpdate: (self) => {
         const p = self.progress;
+        // Fixed under the page: only composite it while it's being revealed.
+        footer.style.visibility = p > 0 ? "visible" : "hidden";
         inner.style.transform = `translate3d(0, ${((1 - p) * 64).toFixed(1)}px, 0)`;
-        const top = window.innerHeight - p * footer.offsetHeight;
-        setTheme(top < 48 ? "lime" : "dark");
         if (p > 0.25 && !played) {
           played = true;
           headRefs.current.forEach((h, i) => h?.play({ delay: i * 140, flicker: i === headRefs.current.length - 1 }));
@@ -59,9 +60,12 @@ export default function Footer() {
       },
     });
 
+    footer.style.visibility = st.progress > 0 ? "visible" : "hidden";
+
     return () => {
       ro.disconnect();
       st.kill();
+      footer.style.visibility = "";
     };
   }, []);
 
@@ -71,6 +75,7 @@ export default function Footer() {
     <footer
       ref={footerRef}
       id="contact"
+      data-surface="lime"
       className="on-lime fixed inset-x-0 bottom-0 z-0 bg-lime text-ink"
     >
       <div ref={innerRef} className="will-change-transform">

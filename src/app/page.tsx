@@ -8,7 +8,7 @@ export default function Home() {
     <>
       {/* The footer is fixed underneath; main reserves its height so it
           gets revealed (curtain) as the last section scrolls away. */}
-      <main id="top" className="relative z-[1] mb-[var(--footer-h,60vh)] bg-black">
+      <main id="top" data-surface="dark" className="relative z-[1] mb-[var(--footer-h,60vh)] bg-black">
         <Stage />
         <Vlogs />
         <Credentials />

@@ -52,6 +52,43 @@ export function setTheme(theme: Theme) {
 }
 
 /**
+ * Header theme = whichever `[data-surface]` is actually visible under the
+ * header line. Hit-testing (rather than per-section scroll triggers) gets
+ * the pixel wipes right for free, since clipped-away layers aren't hit,
+ * and never depends on the order triggers fire in.
+ */
+function syncTheme() {
+  const y = 40;
+  const els = document.elementsFromPoint(window.innerWidth / 2, y);
+  for (const el of els) {
+    if (el.closest("header")) continue;
+    const surface = el.closest<HTMLElement>("[data-surface]");
+    if (surface) {
+      setTheme(surface.dataset.surface as Theme);
+      return;
+    }
+  }
+}
+
+let themeQueued = false;
+let lastThemeSync = 0;
+let trailingTimer: ReturnType<typeof setTimeout> | undefined;
+
+/** Throttled (~12/s while scrolling) with a trailing check once it settles. */
+export function scheduleThemeSync() {
+  if (typeof window === "undefined") return;
+  clearTimeout(trailingTimer);
+  trailingTimer = setTimeout(syncTheme, 120);
+  if (themeQueued || performance.now() - lastThemeSync < 80) return;
+  themeQueued = true;
+  requestAnimationFrame(() => {
+    themeQueued = false;
+    lastThemeSync = performance.now();
+    syncTheme();
+  });
+}
+
+/**
  * Scroll anchors: each section registers a function returning the scroll
  * position that shows it (pinned scenes can't be reached via offsetTop).
  */

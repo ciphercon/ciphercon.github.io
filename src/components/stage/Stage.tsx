@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, DESKTOP_QUERY, STACKED_QUERY } from "@/lib/gsap";
 import { buildCells, cellsToPath, sweepFromRight, type Cell } from "@/lib/pixels";
-import { registerAnchor, setTheme, whenLoaded, loaderDone } from "@/lib/store";
+import { registerAnchor, whenLoaded, loaderDone } from "@/lib/store";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import GlitchCanvas from "@/components/fx/GlitchCanvas";
 import DotHalo from "@/components/fx/DotHalo";
@@ -153,8 +153,6 @@ export default function Stage() {
         setPhoto(p1 < 1);
         gsap.set(track, { x: -Math.min(S.track, Math.max(0, s - T.trackStart)) });
 
-        setTheme(p1 > 0.5 && p2 < 0.5 ? "lime" : "dark");
-
         if (!loaded) return;
         // Text scenes.
         if (s < T.heroEnd) setIntro("hero");
@@ -188,7 +186,6 @@ export default function Stage() {
         onRefreshInit: measure,
         onRefresh: (self) => update(self.progress * T.total),
         onUpdate: (self) => update(self.progress * T.total),
-        onLeave: () => setTheme("dark"),
       });
 
       const offLoaded = loaderDone.subscribe(() => {
@@ -247,21 +244,6 @@ export default function Stage() {
       once("stats", () => stats.current?.show());
       once("experience", () => worked.current?.show());
 
-      const themeFor = (el: HTMLElement | null, theme: "dark" | "lime") => {
-        if (!el) return;
-        triggers.push(
-          ScrollTrigger.create({
-            trigger: el,
-            start: "top top+=40",
-            end: "bottom top+=40",
-            onToggle: (self) => self.isActive && setTheme(theme),
-          })
-        );
-      };
-      themeFor(introRef.current, "dark");
-      themeFor(trackLayerRef.current, "lime");
-      themeFor(workedLayerRef.current, "dark");
-
       const top = (id: string) => () => {
         const el = document.getElementById(id);
         if (!el) return 0;
@@ -286,7 +268,7 @@ export default function Stage() {
     <section aria-label="Introduction, stats, selected work and experience" className="relative">
       <div ref={stageRef} className="relative lg:h-screen lg:overflow-hidden">
         {/* Layer A — dark intro */}
-        <div ref={introRef} className="relative overflow-hidden bg-black lg:absolute lg:inset-0">
+        <div ref={introRef} data-surface="dark" className="relative overflow-hidden bg-black lg:absolute lg:inset-0">
           <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
           <GlitchCanvas
             source={{ kind: "image", src: "/hero-cutout.png" }}
@@ -301,7 +283,7 @@ export default function Stage() {
         </div>
 
         {/* Layer B — lime track */}
-        <div ref={trackLayerRef} className="relative bg-lime lg:invisible lg:absolute lg:inset-0">
+        <div ref={trackLayerRef} data-surface="lime" className="relative bg-lime lg:invisible lg:absolute lg:inset-0">
           <div ref={trackRef} className="lg:flex lg:h-full lg:w-max lg:will-change-transform">
             <StatsGrid ref={stats} />
             <div aria-hidden="true" className="relative hidden h-full w-[calc(var(--col-w)*1.15)] shrink-0 lg:block">
@@ -314,7 +296,7 @@ export default function Stage() {
         </div>
 
         {/* Layer C — dark experience */}
-        <div ref={workedLayerRef} className="relative bg-black lg:invisible lg:absolute lg:inset-0">
+        <div ref={workedLayerRef} data-surface="dark" className="relative bg-black lg:invisible lg:absolute lg:inset-0">
           <WorkedAt ref={worked} />
         </div>
       </div>
