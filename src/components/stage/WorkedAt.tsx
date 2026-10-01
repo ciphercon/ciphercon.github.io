@@ -149,7 +149,7 @@ const WorkedAt = forwardRef<SceneRef>(function WorkedAt(_, ref) {
     <div
       ref={rootRef}
       id="experience"
-      className="invisible relative flex flex-col bg-black px-[var(--edge)] pb-24 pt-[calc(var(--header-h)+3rem)] lg:absolute lg:inset-0 lg:block lg:p-0"
+      className="invisible relative flex flex-col px-[var(--edge)] pb-24 pt-[calc(var(--header-h)+3rem)] lg:absolute lg:inset-0 lg:block lg:p-0"
     >
       <div className="order-1 flex flex-col items-center text-center lg:absolute lg:inset-x-0 lg:top-[calc(var(--header-h)+4.5vh)]">
         <span ref={tagRef} className="tag bg-lime text-ink [clip-path:inset(0_100%_0_0)]">

@@ -7,6 +7,7 @@ import { ABOUT, SKILLS } from "@/data/skills";
 import Scramble from "@/components/ui/Scramble";
 import PixelEdge from "@/components/fx/PixelEdge";
 import DotHalo from "@/components/fx/DotHalo";
+import GridLines from "@/components/chrome/GridLines";
 import CertificationOrbit from "./CertificationOrbit";
 
 function Heading({ tag, title }: { tag: string; title: string }) {
@@ -37,6 +38,7 @@ export default function Credentials() {
   return (
     <section id="credentials" data-surface="dark" className="relative bg-black px-[var(--edge)] pb-28 pt-28 lg:pb-40 lg:pt-36">
       <PixelEdge color="#000000" />
+      <GridLines tone="dark" edgesOnly />
       <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
 
       <div className="relative">

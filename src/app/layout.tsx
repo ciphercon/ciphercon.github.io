@@ -4,7 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Loader from "@/components/chrome/Loader";
 import Header from "@/components/chrome/Header";
-import GridOverlay from "@/components/chrome/GridOverlay";
+import ScrollPill from "@/components/chrome/ScrollPill";
 import Cursor from "@/components/chrome/Cursor";
 
 const rajdhani = Rajdhani({
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <Loader />
           <Header />
-          <GridOverlay />
+          <ScrollPill />
           <Cursor />
           {children}
         </SmoothScroll>

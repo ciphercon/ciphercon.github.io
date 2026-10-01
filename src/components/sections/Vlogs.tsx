@@ -5,6 +5,7 @@ import { registerAnchor } from "@/lib/store";
 import { VIDEOS, VLOGS_COPY } from "@/data/vlogs";
 import Scramble from "@/components/ui/Scramble";
 import PixelEdge from "@/components/fx/PixelEdge";
+import GridLines from "@/components/chrome/GridLines";
 import { WorkCard } from "@/components/stage/SelectedWork";
 
 /** Lime section: interviews and talks, styled like the work cards. */
@@ -18,8 +19,9 @@ export default function Vlogs() {
   return (
     <section id="vlogs" data-surface="lime" className="on-lime relative bg-lime px-[var(--edge)] pb-32 pt-24 lg:pb-44 lg:pt-32">
       <PixelEdge color="#9df133" />
+      <GridLines tone="lime" edgesOnly />
 
-      <div className="max-w-[calc(var(--col-w)*2)]">
+      <div className="relative max-w-[calc(var(--col-w)*2)]">
         <span className="tag bg-[#0b0c0a] text-lime">
           <Scramble text={VLOGS_COPY.tag} trigger="inview" preset="label" nowrap />
         </span>
