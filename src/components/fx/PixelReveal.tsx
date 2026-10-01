@@ -31,7 +31,8 @@ export default function PixelReveal({
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Big flat blocks: 1x upscaled pixelated looks identical and is 4x lighter.
+    const dpr = 1;
     let cells: Cell[] = [];
     let w = 0;
     let h = 0;
@@ -69,18 +70,25 @@ export default function PixelReveal({
       if (revealed) return;
       revealed = true;
       tween?.kill();
+      // Once fully revealed the canvas is blank: hide it so the browser
+      // stops compositing it.
+      const done = () => {
+        canvas.style.visibility = "hidden";
+      };
       if (prefersReducedMotion()) {
         state.p = 1;
         paint();
+        done();
         return;
       }
-      tween = gsap.to(state, { p: 1, duration: 1.05, ease: "power1.inOut", onUpdate: paint });
+      tween = gsap.to(state, { p: 1, duration: 1.05, ease: "power1.inOut", onUpdate: paint, onComplete: done });
     };
 
     const reset = () => {
       revealed = false;
       tween?.kill();
       state.p = 0;
+      canvas.style.visibility = "visible";
       paint();
     };
 
@@ -103,5 +111,7 @@ export default function PixelReveal({
     };
   }, [cover, edge, cols]);
 
-  return <canvas ref={ref} aria-hidden="true" className={className} />;
+  return (
+    <canvas ref={ref} aria-hidden="true" className={className} style={{ imageRendering: "pixelated" }} />
+  );
 }

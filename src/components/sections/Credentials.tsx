@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ScrollTrigger } from "@/lib/gsap";
-import { registerAnchor, setTheme } from "@/lib/store";
+import { registerAnchor } from "@/lib/store";
 import { EDUCATION } from "@/data/education";
 import { ABOUT, SKILLS } from "@/data/skills";
 import Scramble from "@/components/ui/Scramble";
@@ -28,24 +27,15 @@ export default function Credentials() {
   useEffect(() => {
     const el = document.getElementById("credentials");
     if (!el) return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top top+=40",
-      end: "bottom top+=40",
-      onToggle: (self) => self.isActive && setTheme("dark"),
-    });
     const offs = [
       registerAnchor("credentials", () => el.getBoundingClientRect().top + window.scrollY),
       registerAnchor("contact", () => document.documentElement.scrollHeight - window.innerHeight),
     ];
-    return () => {
-      st.kill();
-      offs.forEach((o) => o());
-    };
+    return () => offs.forEach((o) => o());
   }, []);
 
   return (
-    <section id="credentials" className="relative bg-black px-[var(--edge)] pb-28 pt-28 lg:pb-40 lg:pt-36">
+    <section id="credentials" data-surface="dark" className="relative bg-black px-[var(--edge)] pb-28 pt-28 lg:pb-40 lg:pt-36">
       <PixelEdge color="#000000" />
       <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
 

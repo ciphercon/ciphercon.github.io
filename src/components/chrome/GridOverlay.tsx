@@ -8,8 +8,8 @@ const LINES = [0, 1, 2, 3, 4, 5];
 
 /**
  * Fixed page furniture:
- *  - the six vertical grid lines (blended with `difference`, so they read
- *    as dark lines on black and darker-lime lines on lime),
+ *  - the six vertical grid lines, coloured per surface theme (a blend
+ *    mode would cost a full-screen compositing pass every frame),
  *  - small red markers drifting along some lines as you scroll,
  *  - the bottom-centre pill, which stretches with scroll speed.
  */
@@ -25,6 +25,8 @@ export default function GridOverlay() {
       [5, 0.31, 0.03],
     ];
     let w = 40;
+    let shownW = 40;
+    const lastPos: string[] = [];
     const update = () => {
       const vh = window.innerHeight;
       const y = window.scrollY;
@@ -34,11 +36,19 @@ export default function GridOverlay() {
         const span = vh - 120;
         let pos = (base * vh + y * k) % span;
         if (pos < 0) pos += span;
-        el.style.transform = `translate3d(0, ${pos + 60}px, 0)`;
+        const next = `translate3d(0, ${Math.round(pos + 60)}px, 0)`;
+        if (next !== lastPos[i]) {
+          el.style.transform = next;
+          lastPos[i] = next;
+        }
       });
       const target = 40 + Math.min(70, Math.abs(scrollVelocity()) * 3.5);
       w += (target - w) * 0.15;
-      if (pillRef.current) pillRef.current.style.width = `${w.toFixed(1)}px`;
+      const rounded = Math.round(w);
+      if (rounded !== shownW && pillRef.current) {
+        pillRef.current.style.width = `${rounded}px`;
+        shownW = rounded;
+      }
     };
     gsap.ticker.add(update);
     return () => gsap.ticker.remove(update);
@@ -48,11 +58,11 @@ export default function GridOverlay() {
 
   return (
     <>
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-40 mix-blend-difference">
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-40">
         {LINES.map((i) => (
           <span
             key={i}
-            className={`absolute inset-y-0 w-px bg-[#1d1e22] ${i > 2 ? "max-lg:hidden" : ""}`}
+            className={`absolute inset-y-0 w-px bg-[var(--grid-line)] transition-colors duration-300 ${i > 2 ? "max-lg:hidden" : ""}`}
             style={{ left: lineLeft(i) }}
           />
         ))}
