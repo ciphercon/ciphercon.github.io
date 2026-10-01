@@ -1,18 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Mono, DM_Sans, Rajdhani } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Loader from "@/components/chrome/Loader";
+import Header from "@/components/chrome/Header";
+import GridOverlay from "@/components/chrome/GridOverlay";
+import Cursor from "@/components/chrome/Cursor";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -25,13 +35,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${rajdhani.variable} ${dmSans.variable} ${dmMono.variable}`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body>
         <SmoothScroll>
+          <Loader />
           <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <GridOverlay />
+          <Cursor />
+          {children}
         </SmoothScroll>
       </body>
     </html>
