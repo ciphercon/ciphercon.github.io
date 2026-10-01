@@ -1,43 +1,251 @@
 @import "tailwindcss";
 
-:root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --muted: #71717a;
+/* ------------------------------------------------------------------ */
+/* Tokens                                                              */
+/* ------------------------------------------------------------------ */
 
-  /* Green palette, centralized as named tokens: --accent is the
-     saturated pop color on dark surfaces (buttons, links, badges),
-     --accent-bg is the full-bleed section background, and
-     --accent-surface is the card/tile surface on top of it. */
-  --accent: #d4ff3d;
-  --accent-bg: #b6e83a;
-  --accent-surface: #7f9d43;
+:root {
+  --black: #000000;
+  --bg-1: #070707;
+  --bg-2: #0c0c0d;
+  --fg: #f5f0eb;
+  --cream: #f0ece6;
+  --grey-1: #747785;
+  --grey-2: #b0b4c0;
+  --stroke-1: #25272f;
+  --stroke-2: #16171c;
+
+  --lime: #9df133;
+  --lime-soft: #b2f55a;
+  --lime-line: #93e727;
+  --lime-box: #84c72f;
+  --lime-box-stroke: #599f00;
+  --lime-path: #77cd2d;
+  --lime-deep: #3f6410;
+
+  --purple: #620ecc;
+  --purple-ink: #4b25a8;
+  --purple-pixel: #7a12ff;
+  --red: #f75049;
+  --ink: #070210;
+
+  /* Page grid: five columns between 2rem gutters. */
+  --edge: 2rem;
+  --col-w: calc((100vw - 2 * var(--edge)) / 5);
+  --header-h: 5.5rem;
+
+  /* Track unit: ≈1vw, shrunk on short/wide screens so things fit in height. */
+  --u: min(1vw, 1.62vh);
+
+  /* Scramble glyph colours (overridden per surface). */
+  --scr: var(--lime);
+  --scr-dim: color-mix(in srgb, var(--lime) 45%, transparent);
+}
+
+@media (max-width: 1199.98px) {
+  :root {
+    --edge: 1rem;
+    --col-w: calc((100vw - 2 * var(--edge)) / 2);
+    --header-h: 4.25rem;
+    --u: 1vw;
+  }
+}
+
+/* Header / cursor colours follow whatever surface sits under the header. */
+:root,
+:root[data-theme="dark"] {
+  --hd-strong: #ffffff;
+  --hd-text: var(--grey-1);
+  --hd-logo: #ffffff;
+  --hd-mark: var(--lime);
+  --hd-btn-bg: #1d211b;
+  --hd-btn-fg: #ffffff;
+  --hd-btn-border: #2a2f26;
+  --hd-btn-corner: var(--lime);
+  --cursor-ring: #2c2e36;
+  --cursor-arc: var(--lime);
+  --pill-bg: transparent;
+  --pill-border: #3a3d47;
+}
+
+:root[data-theme="lime"] {
+  --hd-strong: var(--ink);
+  --hd-text: #4f6b2a;
+  --hd-logo: var(--purple-ink);
+  --hd-mark: var(--purple-ink);
+  --hd-btn-bg: var(--lime-soft);
+  --hd-btn-fg: var(--ink);
+  --hd-btn-border: var(--lime-box-stroke);
+  --hd-btn-corner: #e0552b;
+  --cursor-ring: #1f2f0c;
+  --cursor-arc: var(--purple);
+  --pill-bg: #4b6b1c;
+  --pill-border: #4b6b1c;
+}
+
+/* Pinned desktop layout from 1200px; tablets and small windows stack. */
+@theme {
+  --breakpoint-lg: 75rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-accent-bg: var(--accent-bg);
-  --color-accent-surface: var(--accent-surface);
-  --color-muted: var(--muted);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-black: var(--black);
+  --color-bg-1: var(--bg-1);
+  --color-bg-2: var(--bg-2);
+  --color-fg: var(--fg);
+  --color-cream: var(--cream);
+  --color-grey-1: var(--grey-1);
+  --color-grey-2: var(--grey-2);
+  --color-stroke-1: var(--stroke-1);
+  --color-stroke-2: var(--stroke-2);
+  --color-lime: var(--lime);
+  --color-lime-soft: var(--lime-soft);
+  --color-lime-box: var(--lime-box);
+  --color-lime-box-stroke: var(--lime-box-stroke);
+  --color-lime-path: var(--lime-path);
+  --color-lime-deep: var(--lime-deep);
+  --color-purple: var(--purple);
+  --color-purple-ink: var(--purple-ink);
+  --color-red: var(--red);
+  --color-ink: var(--ink);
+  --font-heading: var(--font-rajdhani), sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
 }
 
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
 html {
-  background: var(--background);
+  background: var(--black);
   color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--black);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 ::selection {
-  background: var(--accent);
-  color: #09090b;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Type helpers                                                        */
+/* ------------------------------------------------------------------ */
+
+@utility hud {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+@utility hud-strong {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+@utility display {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.005em;
+}
+
+/* Scramble glyph colours */
+.scr {
+  color: var(--scr);
+}
+.scr-dim {
+  color: var(--scr-dim);
+}
+.on-lime {
+  --scr: var(--purple);
+  --scr-dim: color-mix(in srgb, var(--purple) 45%, transparent);
+}
+.on-cream {
+  --scr: var(--purple);
+  --scr-dim: color-mix(in srgb, var(--purple) 40%, transparent);
+}
+
+/* ------------------------------------------------------------------ */
+/* Shapes                                                              */
+/* ------------------------------------------------------------------ */
+
+/* Label with the bottom-right corner chamfered off. */
+@utility tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.8125rem;
+  line-height: 1;
+  padding: 0.5rem 0.95rem 0.45rem 0.6rem;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+}
+
+/* Top-left + bottom-right chamfer (list rows, education cards). */
+@utility chamfer-row {
+  clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
+}
+
+/* Button with tiny L-brackets in each corner. */
+@utility bracket {
+  position: relative;
+  --bk: var(--hd-btn-corner);
+  background-image:
+    linear-gradient(var(--bk), var(--bk)), linear-gradient(var(--bk), var(--bk)),
+    linear-gradient(var(--bk), var(--bk)), linear-gradient(var(--bk), var(--bk)),
+    linear-gradient(var(--bk), var(--bk)), linear-gradient(var(--bk), var(--bk)),
+    linear-gradient(var(--bk), var(--bk)), linear-gradient(var(--bk), var(--bk));
+  background-repeat: no-repeat;
+  background-size:
+    7px 2px, 2px 7px, 7px 2px, 2px 7px,
+    7px 2px, 2px 7px, 7px 2px, 2px 7px;
+  background-position:
+    0 0, 0 0, 100% 0, 100% 0,
+    0 100%, 0 100%, 100% 100%, 100% 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes fade-in {
@@ -58,6 +266,12 @@ body {
   }
 }
 
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
 @keyframes float-bob {
   0%,
   100% {
@@ -65,5 +279,15 @@ body {
   }
   50% {
     transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
