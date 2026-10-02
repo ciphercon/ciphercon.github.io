@@ -35,7 +35,7 @@ export const HERO = {
     { text: " and " },
     { text: "<threat-hunting/>", tone: "code" },
     {
-      text: " Nothing excites me more than chasing adversaries through telemetry and turning noise into detections.",
+      text: ". Nothing excites me more than chasing adversaries through telemetry and turning noise into detections.",
     },
   ],
   // Small lines that bracket the giant name, like a caption.
