@@ -7,6 +7,7 @@ import { registerAnchor, whenLoaded, loaderDone } from "@/lib/store";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import GlitchCanvas from "@/components/fx/GlitchCanvas";
 import DotHalo from "@/components/fx/DotHalo";
+import GridLines from "@/components/chrome/GridLines";
 import HeroScene from "./HeroScene";
 import ManifestoScene from "./ManifestoScene";
 import StatsGrid, { type StatsRef } from "./StatsGrid";
@@ -269,6 +270,7 @@ export default function Stage() {
       <div ref={stageRef} className="relative lg:h-screen lg:overflow-hidden">
         {/* Layer A — dark intro */}
         <div ref={introRef} data-surface="dark" className="relative overflow-hidden bg-black lg:absolute lg:inset-0">
+          <GridLines tone="dark" tickLines={[0, 2, 5]} />
           <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
           <GlitchCanvas
             source={{ kind: "image", src: "/hero-cutout.png" }}
@@ -297,6 +299,8 @@ export default function Stage() {
 
         {/* Layer C — dark experience */}
         <div ref={workedLayerRef} data-surface="dark" className="relative bg-black lg:invisible lg:absolute lg:inset-0">
+          {/* From here on only the outer edges remain, as in the reference. */}
+          <GridLines tone="dark" edgesOnly />
           <WorkedAt ref={worked} />
         </div>
       </div>

@@ -6,6 +6,7 @@ import { STATS_GRID, STATS_GRID_COLS, type GridCard } from "@/data/stats";
 import Scramble, { type ScrambleRef } from "@/components/ui/Scramble";
 import Odometer, { type OdometerRef } from "@/components/ui/Odometer";
 import DotMatrix from "@/components/fx/DotMatrix";
+import GridLines from "@/components/chrome/GridLines";
 import { cn } from "@/lib/cn";
 
 export type StatsRef = { show: () => void; reset: () => void };
@@ -110,6 +111,10 @@ const StatsGrid = forwardRef<StatsRef>(function StatsGrid(_, ref) {
         className="hidden lg:block"
         style={{ width: `calc(2 * var(--edge) + ${STATS_GRID_COLS} * var(--col-w))` }}
       />
+      {/* The page's column lines, owned by this grid: at rest they sit on
+          the same columns as the page grid (and the card edges), then they
+          slide away with the cards when the track starts moving. */}
+      <GridLines tone="lime" cols={STATS_GRID_COLS} tickLines={[1, 4]} className="max-lg:hidden" />
       {STATS_GRID.map((card, i) => {
         const pos = {
           "--l": `calc(var(--edge) + ${card.col} * var(--col-w))`,
