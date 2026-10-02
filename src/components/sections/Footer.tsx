@@ -20,8 +20,10 @@ export default function Footer() {
   const headRefs = useRef<(ScrambleRef | null)[]>([]);
   const linkRefs = useRef<(ScrambleRef | null)[]>([]);
   const wide = useMediaQuery("(min-width: 768px)");
-  const [giantA, giantB] = FOOTER.giant.split("/");
-  const giantLines = wide ? [FOOTER.giant] : [`${giantA}/`, giantB];
+  // Phones break the giant line after the slash, in one canvas so both
+  // lines share a scale. ~11 dot columns per letter keeps strokes even.
+  const giant = wide ? FOOTER.giant : FOOTER.giant.replace("/", "/\n");
+  const giantCols = Math.max(...giant.split("\n").map((l) => l.length)) * 11;
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -149,22 +151,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-lime-box-stroke/40 px-[calc(var(--edge)-0.25rem)] pb-3 pt-6">
+        {/* Extra bottom room on phones keeps the copyright clear of the scroll pill. */}
+        <div className="border-t border-lime-box-stroke/40 px-[calc(var(--edge)-0.25rem)] pb-10 pt-6 sm:pb-3">
           <h2 className="sr-only">{FOOTER.giant}</h2>
-          {giantLines.map((line) => (
-            <DotMatrix
-              key={line}
-              source={{ kind: "string", text: line, weight: 600 }}
-              fit="stretch"
-              shape="square"
-              pitch={wide ? 7 : 5}
-              dot={0.74}
-              color="#0d1404"
-              edgeColor="#4f7a18"
-              hoverColor="#620ecc"
-              className="mb-2 h-[clamp(4rem,12vh,9.5rem)] w-full md:mb-0 md:h-[clamp(4.5rem,14vh,9.5rem)]"
-            />
-          ))}
+          <DotMatrix
+            source={{ kind: "string", text: giant, weight: 600 }}
+            fit="stretch"
+            shape="square"
+            pitch={7}
+            minCols={giantCols}
+            dot={0.74}
+            align="start"
+            color="#0d1404"
+            edgeColor="#4f7a18"
+            hoverColor="#620ecc"
+            className="aspect-[5/2] w-full md:h-[clamp(4.5rem,14vh,9.5rem)]"
+          />
           <p className="hud mt-3 flex flex-col gap-1 text-[0.68rem] text-lime-deep sm:flex-row sm:justify-between">
             <span>
               © {new Date().getFullYear()} {SITE.firstName} {SITE.lastName}
