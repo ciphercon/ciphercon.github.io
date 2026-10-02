@@ -14,6 +14,11 @@ type Props = {
   source: IconSource | { kind: "string"; text: string; weight?: number };
   /** Distance between dot centres, CSS px. */
   pitch?: number;
+  /**
+   * Shrink the pitch on narrow canvases so there are at least this many
+   * columns of dots (with too few, letter strokes break up unevenly).
+   */
+  minCols?: number;
   /** Dot size relative to the pitch. */
   dot?: number;
   shape?: "circle" | "square";
@@ -82,12 +87,52 @@ function drawGlyph(ctx: CanvasRenderingContext2D, name: string, w: number, h: nu
   ctx.restore();
 }
 
+/**
+ * Draws lines of text into ctx within (0,0,w,h). All lines share one scale
+ * (the widest line sets it) and start on a whole grid row, so every line
+ * rasterises alike. `cell` is the size of one dot cell in canvas px.
+ */
+function drawLines(
+  ctx: CanvasRenderingContext2D,
+  lines: string[],
+  w: number,
+  h: number,
+  cell: number,
+  fit: Props["fit"],
+  align: Props["align"]
+) {
+  const ms = lines.map((t) => ctx.measureText(t));
+  const lefts = ms.map((m) => m.actualBoundingBoxLeft || 0);
+  const widths = ms.map((m, i) => lefts[i] + (m.actualBoundingBoxRight || m.width));
+  const asc = Math.max(...ms.map((m) => m.actualBoundingBoxAscent || 70));
+  const desc = Math.max(...ms.map((m) => m.actualBoundingBoxDescent || 0));
+  const n = lines.length;
+  const rows = Math.round(h / cell);
+  const gapRows = Math.max(1, Math.round(rows * 0.08));
+  const lineRows = Math.floor((rows - gapRows * (n - 1)) / n);
+  const top = Math.floor((rows - lineRows * n - gapRows * (n - 1)) / 2);
+  let sx = w / Math.max(...widths);
+  let sy = (lineRows * cell) / (asc + desc);
+  if (fit !== "stretch") sx = sy = Math.min(sx, sy);
+  lines.forEach((text, i) => {
+    ctx.save();
+    ctx.translate(
+      align === "start" ? 0 : (w - widths[i] * sx) / 2,
+      (top + i * (lineRows + gapRows)) * cell
+    );
+    ctx.scale(sx, sy);
+    ctx.fillText(text, lefts[i], asc);
+    ctx.restore();
+  });
+}
+
 async function rasterSource(
   source: Props["source"],
   w: number,
   h: number,
   fit: Props["fit"],
-  align: Props["align"]
+  align: Props["align"],
+  cell: number
 ): Promise<HTMLCanvasElement> {
   const cv = document.createElement("canvas");
   cv.width = w;
@@ -127,6 +172,11 @@ async function rasterSource(
     ctx.fillStyle = "#fff";
     ctx.textBaseline = "alphabetic";
     ctx.font = `${weight} 100px ${fontFamily()}`;
+    const lines = source.text.split("\n");
+    if (lines.length > 1) {
+      drawLines(ctx, lines, w, h, cell, fit, align);
+      return cv;
+    }
     const m = ctx.measureText(source.text);
     const left = m.actualBoundingBoxLeft || 0;
     const right = m.actualBoundingBoxRight || m.width;
@@ -152,6 +202,7 @@ async function rasterSource(
 export default function DotMatrix({
   source,
   pitch = 6,
+  minCols,
   dot = 0.62,
   shape = "circle",
   color,
@@ -180,6 +231,7 @@ export default function DotMatrix({
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const reduce = prefersReducedMotion();
     let cover: Float32Array = new Float32Array(0);
+    let step = pitch;
     let cols = 0;
     let rows = 0;
     let cssW = 0;
@@ -196,16 +248,16 @@ export default function DotMatrix({
       const { color: c, edgeColor: ec, hoverColor: hc } = colorsRef.current;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, cssW, cssH);
-      const ox = (cssW - cols * pitch) / 2;
-      const oy = (cssH - rows * pitch) / 2;
-      const size = pitch * dot;
+      const ox = (cssW - cols * step) / 2;
+      const oy = (cssH - rows * step) / 2;
+      const size = step * dot;
       for (let r = 0; r < rows; r++) {
         for (let q = 0; q < cols; q++) {
           const i = r * cols + q;
           const v = cover[i];
           if (v < 0.18) continue;
-          const cx = ox + q * pitch + pitch / 2;
-          const cy = oy + r * pitch + pitch / 2;
+          const cx = ox + q * step + step / 2;
+          const cy = oy + r * step + step / 2;
           let fill = v > 0.55 ? c : (ec ?? c);
           if (hc && pointer) {
             const d = Math.hypot(pointer.x - cx, pointer.y - cy);
@@ -262,10 +314,11 @@ export default function DotMatrix({
       if (cssW < 2 || cssH < 2) return;
       canvas.width = Math.round(cssW * dpr);
       canvas.height = Math.round(cssH * dpr);
-      cols = Math.max(1, Math.floor(cssW / pitch));
-      rows = Math.max(1, Math.floor(cssH / pitch));
+      step = minCols ? Math.min(pitch, cssW / minCols) : pitch;
+      cols = Math.max(1, Math.floor(cssW / step));
+      rows = Math.max(1, Math.floor(cssH / step));
       const SS = 4;
-      const src = await rasterSource(JSON.parse(key), cols * SS, rows * SS, fit, align);
+      const src = await rasterSource(JSON.parse(key), cols * SS, rows * SS, fit, align, SS);
       if (disposed) return;
       const data = src.getContext("2d")!.getImageData(0, 0, cols * SS, rows * SS).data;
       cover = new Float32Array(cols * rows);
@@ -317,7 +370,7 @@ export default function DotMatrix({
       canvas.removeEventListener("pointerleave", onLeave);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, pitch, dot, shape, chroma, fit, align]);
+  }, [key, pitch, minCols, dot, shape, chroma, fit, align]);
 
   return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
 }
