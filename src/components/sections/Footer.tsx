@@ -152,7 +152,7 @@ export default function Footer() {
         </div>
 
         {/* Extra bottom room on phones keeps the copyright clear of the scroll pill. */}
-        <div className="border-t border-lime-box-stroke/40 px-[calc(var(--edge)-0.25rem)] pb-10 pt-6 sm:pb-3">
+        <div className="border-t border-lime-box-stroke/40 px-[calc(var(--edge)-0.25rem)] pb-9 pt-6 sm:pb-3">
           <h2 className="sr-only">{FOOTER.giant}</h2>
           <DotMatrix
             source={{ kind: "string", text: giant, weight: 600 }}
@@ -165,7 +165,7 @@ export default function Footer() {
             color="#0d1404"
             edgeColor="#4f7a18"
             hoverColor="#620ecc"
-            className="aspect-[5/2] w-full md:h-[clamp(4.5rem,14vh,9.5rem)]"
+            className="aspect-[8/3] w-full md:h-[clamp(4.5rem,14vh,9.5rem)]"
           />
           <p className="hud mt-3 flex flex-col gap-1 text-[0.68rem] text-lime-deep sm:flex-row sm:justify-between">
             <span>
