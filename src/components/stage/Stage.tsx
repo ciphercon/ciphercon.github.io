@@ -273,7 +273,7 @@ export default function Stage() {
           <GridLines tone="dark" tickLines={[0, 2, 5]} />
           <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
           <GlitchCanvas
-            source={{ kind: "image", src: "/hero-cutout.png" }}
+            source={{ kind: "image", src: "/hero-cutout.webp" }}
             mode="photo"
             heightFrac={desktop ? 1.32 : 1.08}
             align={desktop ? [0.6, 0] : [0.5, 0]}

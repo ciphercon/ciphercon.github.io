@@ -11,7 +11,7 @@ const MAX_WAIT_MS = 4000;
 function waitForAssets() {
   const fonts = document.fonts?.ready ?? Promise.resolve();
   const portrait = new Image();
-  portrait.src = "/hero-cutout.png";
+  portrait.src = "/hero-cutout.webp";
   const photo = portrait.decode().catch(() => undefined);
   const timeout = new Promise((r) => setTimeout(r, MAX_WAIT_MS));
   const minimum = new Promise((r) => setTimeout(r, MIN_SHOW_MS));
