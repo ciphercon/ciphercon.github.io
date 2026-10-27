@@ -1,5 +1,6 @@
 import { Howl, Howler } from "howler";
 import { whenLoaded } from "@/lib/store";
+import { heroPhotoReady } from "@/lib/heroPhoto";
 
 /**
  * Shared ambient-sound controller (public/ambient.mp3), so several toggles
@@ -10,10 +11,10 @@ import { whenLoaded } from "@/lib/store";
  * keypress anywhere on the page.
  *
  * The track is ~10 MB, so it only starts downloading once the page's own
- * assets have loaded and the loader is gone; on slow connections it would
- * otherwise starve the hero photo, fonts and scripts. It stays on Web Audio
- * (not HTML5 streaming) because iOS ignores volume on HTML5 audio and the
- * loop would no longer be gapless.
+ * assets and the hero photo have loaded and the loader is gone; on slow
+ * connections it would otherwise starve the photo, fonts and scripts. It
+ * stays on Web Audio (not HTML5 streaming) because iOS ignores volume on
+ * HTML5 audio and the loop would no longer be gapless.
  *
  * Toggle buttons carry `data-sound-toggle` and are excluded from that
  * generic listener, and the displayed state follows Howler's own play/pause
@@ -71,7 +72,7 @@ export function acquireSound() {
       },
     });
     howl = h;
-    Promise.all([pageLoaded(), whenLoaded()]).then(() => {
+    Promise.all([pageLoaded(), whenLoaded(), heroPhotoReady()]).then(() => {
       if (howl === h) h.load();
     });
     UNLOCK_EVENTS.forEach((ev) => document.addEventListener(ev, tryPlay, { passive: true }));

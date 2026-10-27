@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, DESKTOP_QUERY, STACKED_QUERY } from "@/lib/gsap";
 import { buildCells, cellsToPath, sweepFromRight, type Cell } from "@/lib/pixels";
 import { registerAnchor, whenLoaded, loaderDone } from "@/lib/store";
 import { useMediaQuery } from "@/lib/useMediaQuery";
+import { HERO_PHOTO } from "@/lib/heroPhoto";
 import GlitchCanvas from "@/components/fx/GlitchCanvas";
 import DotHalo from "@/components/fx/DotHalo";
 import GridLines from "@/components/chrome/GridLines";
@@ -273,7 +274,7 @@ export default function Stage() {
           <GridLines tone="dark" tickLines={[0, 2, 5]} />
           <DotHalo className="pointer-events-none absolute inset-0 h-full w-full max-lg:hidden" />
           <GlitchCanvas
-            source={{ kind: "image", src: "/hero-cutout.webp" }}
+            source={{ kind: "image", src: HERO_PHOTO }}
             mode="photo"
             heightFrac={desktop ? 1.32 : 1.08}
             align={desktop ? [0.6, 0] : [0.5, 0]}
