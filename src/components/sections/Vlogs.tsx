@@ -47,6 +47,7 @@ export default function Vlogs() {
             <img
               src={`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`}
               alt=""
+              loading="lazy"
               decoding="async"
               fetchPriority="low"
               className="h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110"
